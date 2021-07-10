@@ -1,5 +1,8 @@
 package Code;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+
 public class Player {
     //attributes
     private String name;
@@ -10,6 +13,7 @@ public class Player {
     private String position;
     private double height;
     private double weeklySalary;
+
 
     //getters and setters
     public void setName(String name) {

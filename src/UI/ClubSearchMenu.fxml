@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ClubSearchMenuCtrl">
+   <children>
+      <TextField fx:id="searchKey" layoutX="200.0" layoutY="74.0" onAction="#searchKeyPressed" prefHeight="30.0" prefWidth="400.0" promptText="Enter the club name">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <effect>
+            <ColorAdjust />
+         </effect></TextField>
+      <TabPane fx:id="tabPane" layoutY="124.0" prefHeight="350.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+            <Tab closable="false" text="Total yearly salary">
+                <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                </content>
+            </Tab>
+          <Tab fx:id="salaryTab" closable="false" onSelectionChanged="#salaryTabPressed" text="Player(s) with the maximum salary">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="salaryTable" prefHeight="321.0" prefWidth="800.0">
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+          <Tab closable="false" text="Player(s) with the maximum age">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView prefHeight="324.0" prefWidth="800.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab closable="false" text="Player(s) with the maximum height">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView prefHeight="324.0" prefWidth="800.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
+              </content>
+            </Tab>
+
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

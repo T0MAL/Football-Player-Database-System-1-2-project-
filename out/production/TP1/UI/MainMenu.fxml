@@ -7,16 +7,16 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450" prefWidth="800" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.MainMenuCtrl">
    <children>
-      <Button layoutX="41.0" layoutY="120.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" text="Search Player">
+      <Button layoutX="41.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchPlayerButton" prefHeight="140.0" prefWidth="140.0" text="Search Player">
       </Button>
-      <Button layoutX="193.0" layoutY="120.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" text="Search Club">
+      <Button layoutX="193.0" layoutY="120.0" mnemonicParsing="false" onAction="#searchClubButton" prefHeight="70.0" prefWidth="140.0" text="Search Club">
       </Button>
       <ImageView fitHeight="333.0" fitWidth="463.0" layoutX="433.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/Junior%20soccer-rafiki.png" />
          </image>
       </ImageView>
-      <Button layoutX="41.0" layoutY="272.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" text="Exit" />
-      <Button layoutX="193.0" layoutY="202.0" mnemonicParsing="false" prefHeight="140.0" prefWidth="140.0" text="Add Player" />
+      <Button layoutX="41.0" layoutY="272.0" mnemonicParsing="false" onAction="#exitButton" prefHeight="70.0" prefWidth="140.0" text="Exit" />
+      <Button layoutX="193.0" layoutY="202.0" mnemonicParsing="false" onAction="#addPlayerButton" prefHeight="140.0" prefWidth="140.0" text="Add Player" />
    </children>
 </AnchorPane>

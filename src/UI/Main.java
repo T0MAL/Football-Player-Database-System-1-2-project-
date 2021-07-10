@@ -1,5 +1,6 @@
 package UI;
 
+import Code.FootballAssociation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,10 +13,11 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         stg=primaryStage;
-        showMainMenu();
+        FootballAssociation fa=new FootballAssociation();
+        showMainMenu(fa);
     }
 
-    void showMainMenu() {
+    void showMainMenu(FootballAssociation fa) {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("MainMenu.fxml"));
         Parent root = null;
@@ -26,8 +28,48 @@ public class Main extends Application {
         }
         MainMenuCtrl ctrl = loader.getController();
         ctrl.setMain(this);
+        ctrl.init(fa);
 
         stg.setTitle("Main Menu");
+        Scene scn=new Scene(root,800,450);
+        scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+        stg.setScene(scn);
+        stg.show();
+    }
+
+    void showPlayerSearchMenu(FootballAssociation fa) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PlayerSearchMenu.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        PlayerSearchMenuCtrl ctrl = loader.getController();
+        ctrl.setMain(this);
+
+        stg.setTitle("Player Search Menu");
+        Scene scn=new Scene(root,800,450);
+        scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+        stg.setScene(scn);
+        stg.show();
+    }
+
+    void showClubSearchMenu(FootballAssociation fa) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("ClubSearchMenu.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        ClubSearchMenuCtrl ctrl = loader.getController();
+        ctrl.setMain(this);
+        ctrl.init(fa);
+
+        stg.setTitle("Club Search Menu");
         Scene scn=new Scene(root,800,450);
         scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         stg.setScene(scn);
