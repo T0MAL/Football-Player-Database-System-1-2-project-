@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.PlayerSearchScreenCtrl">
+   <children>
+      <TabPane fx:id="tabPane" layoutY="50.0" prefHeight="400.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="nameTab" onSelectionChanged="#nameTabPressed" text="By Name">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="nameKey" layoutX="315.0" layoutY="25.0" onAction="#nameKeyPressed" promptText="Enter player name" />
+                        <TableView fx:id="nameTable" layoutY="70.0" prefHeight="280.0" prefWidth="785.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="positionTab" onSelectionChanged="#positionTabPressed" text="By Position">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="positionKey" layoutX="315.0" layoutY="25.0" onAction="#positionKeyPressed" promptText="Enter player position" />
+                        <TableView fx:id="positionTable" layoutY="70.0" prefHeight="280.0" prefWidth="785.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="ccTab" onSelectionChanged="#ccTabPressed" text="By Club &amp; Country">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="countryKey" layoutX="130.0" layoutY="25.0" promptText="Enter Country Name" />
+                        <TextField fx:id="clubKey" layoutX="500.0" layoutY="25.0" promptText="Enter Club Name" />
+                        <TableView fx:id="ccTable" layoutY="70.0" prefHeight="280.0" prefWidth="785.0" />
+                        <Button layoutX="343.0" layoutY="25.0" mnemonicParsing="false" onAction="#searchCCButt" prefHeight="38.0" prefWidth="98.0" text="Search" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="srTab" onSelectionChanged="#srTabPressed" text="By Salary-Range">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="minSalKey" layoutX="130.0" layoutY="25.0" promptText="Minimum Range" />
+                        <TextField fx:id="maxSalKey" layoutX="500.0" layoutY="25.0" promptText="Maximum Range" />
+                        <TableView fx:id="srTable" layoutY="70.0" prefHeight="280.0" prefWidth="785.0" />
+                        <Button layoutX="343.0" layoutY="25.0" mnemonicParsing="false" onAction="#searchSRButt" prefHeight="38.0" prefWidth="98.0" text="Search" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="cwpTab" onSelectionChanged="#cwpTabPressed" text="Country Wise Player Count">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="cwpTable" layoutY="70.0" prefHeight="280.0" prefWidth="786.0" />
+                        <Button layoutX="351.0" layoutY="32.0" mnemonicParsing="false" text="Refresh" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

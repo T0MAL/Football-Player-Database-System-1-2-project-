@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ClubSearchMenuCtrl">
    <children>
-      <TextField fx:id="searchKey" layoutX="200.0" layoutY="74.0" onAction="#searchKeyPressed" prefHeight="30.0" prefWidth="400.0" promptText="Enter the club name">
+      <Label fx:id="notFound" layoutX="355.0" layoutY="91.0" prefHeight="19.0" prefWidth="90.0" style="-fx-background-color: transparent;-fx-text-fill: linear-gradient(darkred, #38424b);" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font></Label>
+      <TextField fx:id="searchKey" layoutX="200.0" layoutY="60.0" onAction="#searchKeyPressed" prefHeight="30.0" prefWidth="400.0" promptText="Enter the club name">
          <font>
             <Font size="15.0" />
          </font>
@@ -20,9 +26,20 @@
          </effect></TextField>
       <TabPane fx:id="tabPane" layoutY="124.0" prefHeight="350.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab closable="false" text="Total yearly salary">
+            <Tab fx:id="yrSalaryTab" closable="false" onSelectionChanged="#ySalaryPressed" text="Total yearly salary">
                 <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="322.0" fitWidth="800.0" opacity="0.15" pickOnBounds="true">
+                           <image>
+                              <Image url="@../images/4280871.jpg" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="yearlySal" layoutX="150.0" layoutY="40.0" prefHeight="122.0" prefWidth="510.0"  textAlignment="CENTER" wrapText="true">
+                           <font>
+                              <Font size="24.0" />
+                           </font></Label>
+                     </children></AnchorPane>
                 </content>
             </Tab>
           <Tab fx:id="salaryTab" closable="false" onSelectionChanged="#salaryTabPressed" text="Player(s) with the maximum salary">
@@ -34,29 +51,19 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab closable="false" text="Player(s) with the maximum age">
+          <Tab fx:id="ageTab" closable="false" onSelectionChanged="#ageTabPressed" text="Player(s) with the maximum age">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="324.0" prefWidth="800.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                          </columns>
-                        </TableView>
+                        <TableView fx:id="ageTable" prefHeight="324.0" prefWidth="800.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
-            <Tab closable="false" text="Player(s) with the maximum height">
+            <Tab fx:id="heightTab" closable="false" onSelectionChanged="#heightTabPressed" text="Player(s) with the maximum height">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView prefHeight="324.0" prefWidth="800.0">
-                          <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
-                          </columns>
-                        </TableView>
+                        <TableView fx:id="heightTable" prefHeight="324.0" prefWidth="800.0" />
                      </children></AnchorPane>
               </content>
             </Tab>

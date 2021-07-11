@@ -8,23 +8,23 @@
 
 <AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.PlayerSearchMenuCtrl">
    <children>
-      <Button layoutX="110.0" layoutY="145.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" text="By Name" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="110.0" layoutY="145.0" mnemonicParsing="false" onAction="#goName" prefHeight="70.0" prefWidth="140.0" text="By Name" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button layoutX="110.0" layoutY="225.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" text="By Position" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="110.0" layoutY="225.0" mnemonicParsing="false" onAction="#goPos" prefHeight="70.0" prefWidth="140.0" text="By Position" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button layoutX="260.0" layoutY="225.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" text="By Salary-Range" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="260.0" layoutY="225.0" mnemonicParsing="false" onAction="#goSR" prefHeight="70.0" prefWidth="140.0" text="By Salary-Range" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button layoutX="260.0" layoutY="145.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="140.0" text="By Club &amp; Country" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="260.0" layoutY="145.0" mnemonicParsing="false" onAction="#goCC" prefHeight="70.0" prefWidth="140.0" text="By Club &amp; Country" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <Button layoutX="410.0" layoutY="146.0" mnemonicParsing="false" prefHeight="150.0" prefWidth="160.0" text="Country Wise Player Count" textAlignment="CENTER" wrapText="true">
+      <Button layoutX="410.0" layoutY="146.0" mnemonicParsing="false" onAction="#goCWP" prefHeight="150.0" prefWidth="160.0" text="Country Wise Player Count" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="15.0" />
          </font></Button>

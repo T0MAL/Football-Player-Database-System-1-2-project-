@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private Stage stg;
+    private Stage playerPro=new Stage();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -48,6 +49,7 @@ public class Main extends Application {
         }
         PlayerSearchMenuCtrl ctrl = loader.getController();
         ctrl.setMain(this);
+        ctrl.init(fa);
 
         stg.setTitle("Player Search Menu");
         Scene scn=new Scene(root,800,450);
@@ -70,6 +72,26 @@ public class Main extends Application {
         ctrl.init(fa);
 
         stg.setTitle("Club Search Menu");
+        Scene scn=new Scene(root,800,450);
+        scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+        stg.setScene(scn);
+        stg.show();
+    }
+
+    void showPlayerSearchScreen(FootballAssociation fa,int tabIndx) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PlayerSearchScreen.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        PlayerSearchScreenCtrl ctrl = loader.getController();
+        ctrl.setMain(this);
+        ctrl.init(fa,tabIndx);
+
+        stg.setTitle("Player Search Screen");
         Scene scn=new Scene(root,800,450);
         scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         stg.setScene(scn);
