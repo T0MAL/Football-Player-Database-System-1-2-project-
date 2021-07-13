@@ -53,16 +53,23 @@ abstract public class SearchPlayer {
         return tmp;
     }
 
-    public static Map<String,Integer> countryWiseCount(List <Player> p) {
-        Map<String, Integer> hm = new HashMap();
+    public static List<Country> countryWiseCount(List <Player> p) {
+        List<Country> country=new ArrayList<>();
+        boolean isFound;
         for (Player i : p) {
-            if (hm.containsKey(i.getCountry())) {
-                hm.put(i.getCountry(), hm.get(i.getCountry()) + 1);
-            } else {
-                hm.put(i.getCountry(), 1);
+            isFound=false;
+            for(Country c:country){
+                if(c.getName().equalsIgnoreCase(i.getCountry())){
+                    c.increaseCount();
+                    isFound=true;
+                    break;
+                }
+            }
+            if(!isFound){
+                country.add(new Country(i.getCountry()));
             }
         }
-        return hm;
+        return country;
     }
 
 }

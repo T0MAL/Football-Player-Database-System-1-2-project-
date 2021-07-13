@@ -11,8 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class ClubSearchMenuCtrl {
     private Main main;
     FootballAssociation fa;
-    String key;
-    boolean clubExists;
+    String key="";
     @FXML
     private Label notFound;
     @FXML
@@ -37,38 +36,44 @@ public class ClubSearchMenuCtrl {
     private Label yearlySal;
     public void searchKeyPressed(ActionEvent actionEvent) {
         key=searchKey.getText();
-        for(Club i:fa.getClubs()){
-            if(i.getName().equalsIgnoreCase(key)){
-                clubExists=true;
-                notFound.setText("");
-                break;
-            }
-            clubExists=false;
-        }
-        if(!clubExists){
-            notFound.setText("Club not found");
-            salaryTable.getItems().clear();
-            ageTable.getItems().clear();
-            heightTable.getItems().clear();
-            yearlySal.setText("");
-        }
-        if(salaryTab.isSelected() && clubExists){
-            //salaryTable.getColumns().addAll(name, country, club, button);
+
+        if(salaryTab.isSelected() && !key.equals("")){
+            notFound.setText("");
             salaryTable.setItems(FXCollections.observableList(SearchClub.maxSalary(key,fa.getClubs())));
+            if(salaryTable.getItems().isEmpty()){
+                notFound.setText("Club not found");
+            }
         }
-        else if(ageTab.isSelected() && clubExists){
-           // ageTable.getColumns().addAll(name, country, club, button);
+
+        else if(ageTab.isSelected() && !key.equals("")){
+            notFound.setText("");
             ageTable.setItems(FXCollections.observableList(SearchClub.maxAge(key,fa.getClubs())));
+            if(ageTable.getItems().isEmpty()){
+                notFound.setText("Club not found");
+            }
         }
-        else if(heightTab.isSelected() && clubExists){
-           // heightTable.getColumns().addAll(name, country, club, button);
+
+        else if(heightTab.isSelected() && !key.equals("")){
+            notFound.setText("");
             heightTable.setItems(FXCollections.observableList(SearchClub.maxHeight(key,fa.getClubs())));
+            if(heightTable.getItems().isEmpty()){
+                notFound.setText("Club not found");
+            }
         }
-        else if(yrSalaryTab.isSelected() && clubExists){
-            String tmp=Utility.polishString(key)+"'s total yearly salary: "+String.valueOf(SearchClub.totalSalary(key,fa.getClubs()));
-            yearlySal.setText(tmp);
+
+        else if(yrSalaryTab.isSelected() && !key.equals("")){
+            notFound.setText("");
+            double d=SearchClub.totalSalary(key,fa.getClubs());
+            if(d==0){
+                notFound.setText("Club not found");
+            }
+            else{
+                String tmp=Utility.polishString(key)+"'s total yearly salary: "+String.valueOf(d);
+                yearlySal.setText(tmp);
+            }
         }
     }
+
     public void setMain(Main main) {
         this.main = main;
     }
@@ -81,83 +86,106 @@ public class ClubSearchMenuCtrl {
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Player, String> country = new TableColumn<>("Player's Country");
-        country.setMinWidth(150);
+        country.setMinWidth(175);
         country.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         TableColumn<Player, String> club = new TableColumn<>("Player's Club");
-        club.setMinWidth(150);
+        club.setMinWidth(175);
         club.setCellValueFactory(new PropertyValueFactory<>("club"));
 
         TableColumn<Player, Double> salary = new TableColumn<>("Player's Salary");
-        salary.setMinWidth(200);
+        salary.setMinWidth(150);
         salary.setCellValueFactory(new PropertyValueFactory<>("weeklySalary"));
 
         TableColumn<Player, String> button = new TableColumn<>("Profile");
         button.setMinWidth(80);
 
         TableColumn<Player, String> name2 = new TableColumn<>("Player Name");
-        name2.setMinWidth(300);
+        name2.setMinWidth(200);
         name2.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Player, String> country2 = new TableColumn<>("Player's Country");
-        country2.setMinWidth(200);
+        country2.setMinWidth(175);
         country2.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         TableColumn<Player, String> club2 = new TableColumn<>("Player's Club");
-        club2.setMinWidth(200);
+        club2.setMinWidth(175);
         club2.setCellValueFactory(new PropertyValueFactory<>("club"));
+
+        TableColumn<Player, Integer> age2 = new TableColumn<>("Player's Age");
+        age2.setMinWidth(150);
+        age2.setCellValueFactory(new PropertyValueFactory<>("age"));
 
         TableColumn<Player, String> button2 = new TableColumn<>("Profile");
         button2.setMinWidth(80);
 
         TableColumn<Player, String> name3 = new TableColumn<>("Player Name");
-        name3.setMinWidth(300);
+        name3.setMinWidth(200);
         name3.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<Player, String> country3 = new TableColumn<>("Player's Country");
-        country3.setMinWidth(200);
+        country3.setMinWidth(175);
         country3.setCellValueFactory(new PropertyValueFactory<>("country"));
 
         TableColumn<Player, String> club3 = new TableColumn<>("Player's Club");
-        club3.setMinWidth(200);
+        club3.setMinWidth(175);
         club3.setCellValueFactory(new PropertyValueFactory<>("club"));
+
+        TableColumn<Player, Double> height3 = new TableColumn<>("Player's Height");
+        height3.setMinWidth(150);
+        height3.setCellValueFactory(new PropertyValueFactory<>("height"));
 
         TableColumn<Player, String> button3 = new TableColumn<>("Profile");
         button3.setMinWidth(80);
         //buttonCol.setCellValueFactory(new PropertyValueFactory<>("button"));
 
         salaryTable.getColumns().addAll(name, country, club, salary, button);
-        ageTable.getColumns().addAll(name2, country2, club2, button2);
-        heightTable.getColumns().addAll(name3, country3, club3, button3);
+        ageTable.getColumns().addAll(name2, country2, club2, age2,button2);
+        heightTable.getColumns().addAll(name3, country3, club3, height3,button3);
 
     }
 
     public void salaryTabPressed(Event event) {
-        //System.out.println("sal pressed");
-        if(salaryTab.isSelected() && clubExists){
-           // salaryTable.getColumns().addAll(name, country, club, button);
-            salaryTable.setItems(FXCollections.observableList(SearchClub.maxSalary(key,fa.getClubs())));
+        if (salaryTab.isSelected() && !key.equals("")) {
+            notFound.setText("");
+            salaryTable.setItems(FXCollections.observableList(SearchClub.maxSalary(key, fa.getClubs())));
+            if (salaryTable.getItems().isEmpty()) {
+                notFound.setText("Club not found");
+            }
         }
     }
 
     public void ageTabPressed(Event event) {
-        if(ageTab.isSelected() && clubExists){
-           // ageTable.getColumns().addAll(name, country, club, button);
+        if(ageTab.isSelected() && !key.equals("")){
+            notFound.setText("");
             ageTable.setItems(FXCollections.observableList(SearchClub.maxAge(key,fa.getClubs())));
+            if(ageTable.getItems().isEmpty()){
+                notFound.setText("Club not found");
+            }
         }
     }
 
     public void heightTabPressed(Event event) {
-        if(heightTab.isSelected() && clubExists){
-           // heightTable.getColumns().addAll(name, country, club, button);
+        if(heightTab.isSelected() && !key.equals("")){
+            notFound.setText("");
             heightTable.setItems(FXCollections.observableList(SearchClub.maxHeight(key,fa.getClubs())));
+            if(heightTable.getItems().isEmpty()){
+                notFound.setText("Club not found");
+            }
         }
     }
 
     public void ySalaryPressed(Event event) {
-        if(yrSalaryTab.isSelected() && clubExists) {
-            String tmp = Utility.polishString(key) + "'s total yearly salary: " + String.valueOf(SearchClub.totalSalary(key, fa.getClubs()));
-            yearlySal.setText(tmp);
+        if(yrSalaryTab.isSelected() && !key.equals("")){
+            notFound.setText("");
+            double d=SearchClub.totalSalary(key,fa.getClubs());
+            if(d==0){
+                notFound.setText("Club not found");
+            }
+            else{
+                String tmp=Utility.polishString(key)+"'s total yearly salary: "+String.valueOf(d);
+                yearlySal.setText(tmp);
+            }
         }
     }
 }

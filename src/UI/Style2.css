@@ -1,0 +1,35 @@
+.root{
+    -fx-font-size: 13;
+    -fx-background-color: linear-gradient(to top, #242D78, #6674F9);
+}
+
+.text-field {
+    -fx-font-family: "Arial";
+    -fx-prompt-text-fill: #61606C;
+    -fx-text-fill: linear-gradient(#0e0e0e, #312f2f);
+    -fx-font-size: 14px;
+    -fx-border-color: #151414;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+}
+.text-field:focused {
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(black, #312f2f);
+    -fx-font-size: 15px;
+    -fx-border-color: #82fc00;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+}
+
+.button{
+    -fx-background-color: #6658d3;
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: #FFF;
+    -fx-font-size: 15px;
+    -fx-padding: 1 1 1 1;
+}
+

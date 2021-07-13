@@ -17,7 +17,7 @@
          <font>
             <Font size="13.0" />
          </font></Label>
-      <TextField fx:id="searchKey" layoutX="200.0" layoutY="60.0" onAction="#searchKeyPressed" prefHeight="30.0" prefWidth="400.0" promptText="Enter the club name">
+      <TextField fx:id="searchKey" focusTraversable="false" layoutX="200.0" layoutY="60.0" onAction="#searchKeyPressed" prefHeight="30.0" prefWidth="400.0" promptText="Enter the club name">
          <font>
             <Font size="15.0" />
          </font>
@@ -35,7 +35,7 @@
                               <Image url="@../images/4280871.jpg" />
                            </image>
                         </ImageView>
-                        <Label fx:id="yearlySal" layoutX="150.0" layoutY="40.0" prefHeight="122.0" prefWidth="510.0"  textAlignment="CENTER" wrapText="true">
+                        <Label fx:id="yearlySal" layoutX="150.0" layoutY="40.0" prefHeight="122.0" prefWidth="510.0" textAlignment="CENTER" wrapText="true">
                            <font>
                               <Font size="24.0" />
                            </font></Label>

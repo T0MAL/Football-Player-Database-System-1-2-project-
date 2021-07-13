@@ -60,7 +60,7 @@
     -fx-font-family: "Arial";
     -fx-text-fill: linear-gradient(black, #312f2f);
     -fx-font-size: 15px;
-    -fx-border-color: #5ba80c;
+    -fx-border-color: #82fc00;
     -fx-border-width: 1 1 1 1;
     -fx-border-radius: 10;
     -fx-background-color: transparent;
@@ -101,3 +101,10 @@
     -fx-text-fill: linear-gradient(white, #d0d0d0);
     -fx-padding: 10 7 10 7;
 }
+
+.table-row-cell:odd,
+.tree-table-row-cell:odd {
+    -fx-background-color: #e8dfca;
+}
+
+

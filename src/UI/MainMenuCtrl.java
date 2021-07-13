@@ -8,10 +8,9 @@ import java.io.IOException;
 
 public class MainMenuCtrl {
     private Main main;
-    private FootballAssociation fa;
 
-    public void init(FootballAssociation fa){
-        this.fa=fa;
+    public void init(){
+
     }
 
     public void setMain(Main main) {
@@ -19,11 +18,11 @@ public class MainMenuCtrl {
     }
     @FXML
     public void searchPlayerButton(ActionEvent actionEvent) {
-        main.showPlayerSearchMenu(fa);
+        main.showPlayerSearchMenu();
     }
     @FXML
     public void searchClubButton(ActionEvent actionEvent) {
-        main.showClubSearchMenu(fa);
+        main.showClubSearchMenu();
     }
     @FXML
     public void exitButton(ActionEvent actionEvent) {
@@ -31,6 +30,6 @@ public class MainMenuCtrl {
     }
     @FXML
     public void addPlayerButton(ActionEvent actionEvent) {
-
+        main.showPlayerAddScreen();
     }
 }
