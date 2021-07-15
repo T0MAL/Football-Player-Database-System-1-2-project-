@@ -7,11 +7,32 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.PlayerSearchScreenCtrl">
    <children>
+       <Label layoutX="337.0" layoutY="5.0" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: rgb(179,183,245); -fx-padding: 10 10 10 10; " text="Player Search" wrapText="true">
+           <font>
+               <Font name="Uni-Sans-Bold-Italic" size="18.0" />
+           </font>
+       </Label>
+
+       <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#backButton" prefWidth="0.0" style="-fx-padding: 1 1 1 1; -fx-background-color: transparent">
+           <graphic>
+               <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                   <image>
+                       <Image url="@../images/back.png" />
+                   </image>
+               </ImageView>
+           </graphic>
+           <effect>
+               <BoxBlur />
+           </effect>
+       </Button>
       <TabPane fx:id="tabPane" layoutY="50.0" prefHeight="400.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="nameTab" onSelectionChanged="#nameTabPressed" text="By Name">

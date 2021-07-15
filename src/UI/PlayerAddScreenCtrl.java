@@ -200,6 +200,7 @@ public class PlayerAddScreenCtrl {
             }
         }
         else{
+            resultLabel.setTextFill(Color.RED);
             resultLabel.setText("Failed to add player");
         }
 
@@ -223,6 +224,6 @@ public class PlayerAddScreenCtrl {
     }
 
     public void backButton(ActionEvent actionEvent) {
-        System.out.println("kala hba");
+        main.showMainMenu();
     }
 }

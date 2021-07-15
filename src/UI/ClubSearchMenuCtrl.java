@@ -78,8 +78,9 @@ public class ClubSearchMenuCtrl {
         this.main = main;
     }
 
-    public void init(FootballAssociation fa){
+    public void init(FootballAssociation fa,int i){
         this.fa=fa;
+        tabPane.getSelectionModel().select(i);
 
         TableColumn<Player, String> name = new TableColumn<>("Player Name");
         name.setMinWidth(200);
@@ -187,5 +188,9 @@ public class ClubSearchMenuCtrl {
                 yearlySal.setText(tmp);
             }
         }
+    }
+
+    public void backButton(ActionEvent actionEvent) {
+        main.showClubSearchOpt();
     }
 }

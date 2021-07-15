@@ -22,10 +22,15 @@ public class MainMenuCtrl {
     }
     @FXML
     public void searchClubButton(ActionEvent actionEvent) {
-        main.showClubSearchMenu();
+        main.showClubSearchOpt();
     }
     @FXML
     public void exitButton(ActionEvent actionEvent) {
+        try {
+            main.stop();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
     @FXML

@@ -286,4 +286,8 @@ public class PlayerSearchScreenCtrl {
             clubKey.setEditable(true);
         }
     }
+
+    public void backButton(ActionEvent actionEvent) {
+        main.showPlayerSearchMenu();
+    }
 }

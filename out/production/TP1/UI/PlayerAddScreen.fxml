@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.BoxBlur?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,6 +18,13 @@
             <Image url="@../images/download.jpg" />
          </image>
       </ImageView>
+      <Label layoutX="348.0" layoutY="5.0" prefHeight="15.0" prefWidth="104.0" style="-fx-background-color: transparent; -fx-padding: 10 10 10 10;" text="Add Player" wrapText="true">
+         <font>
+            <Font name="Uni-Sans-Bold-Italic" size="18.0" />
+         </font>
+      </Label>
+
+
       <AnchorPane layoutX="100.0" layoutY="40.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgba( 255, 255, 255, 0.25 ); -fx-background-radius: 10; -fx-border-width: 1; -fx-border-color: 1px solid rgba( 255, 255, 255, 0.18 );">
          <children>
             <TextField fx:id="name" focusTraversable="false" layoutX="68.0" layoutY="44.0" onAction="#nameP" prefHeight="25.0" prefWidth="205.0" promptText="Player's Name" />
@@ -31,7 +39,7 @@
             <TextField fx:id="club" focusTraversable="false" layoutX="348.0" layoutY="44.0" onAction="#clubP" prefHeight="25.0" prefWidth="205.0" promptText="Player's Club" />
             <TextField fx:id="number" focusTraversable="false" layoutX="347.0" layoutY="122.0" onAction="#numberP" prefHeight="25.0" prefWidth="205.0" promptText="Player's Number" />
             <TextField fx:id="ws" focusTraversable="false" layoutX="68.0" layoutY="284.0" onAction="#wsP" prefHeight="25.0" prefWidth="205.0" promptText="Player's Weekly-Salary" />
-            <ChoiceBox fx:id="position" layoutX="374.0" layoutY="283.0" prefWidth="150.0" style="-fx-background-color: grey;" />
+            <ChoiceBox fx:id="position" layoutX="374.0" layoutY="283.0" prefWidth="150.0" style="-fx-background-color: #99bed4;" />
             <Label fx:id="invalidCountry" layoutX="105.0" layoutY="148.0" text="Invalid format, only alphabets" textAlignment="CENTER" textFill="RED" wrapText="true">
                <font>
                   <Font size="10.0" />
@@ -62,8 +70,8 @@
                   <Font size="10.0" />
                </font>
             </Label>
-            <Button layoutX="248.0" layoutY="347.0" mnemonicParsing="false" onAction="#addButt" style="-fx-padding: 10 15 10 15;" text="Add Player" />
-            <Label fx:id="resultLabel" layoutX="373.0" layoutY="356.0" prefHeight="19.0" prefWidth="206.0" text="Label" />
+            <Button layoutX="248.0" layoutY="347.0" mnemonicParsing="false" onAction="#addButt" style="" text="Add Player" />
+            <Label fx:id="resultLabel" layoutX="364.0" layoutY="337.0" prefHeight="58.0" prefWidth="231.0" textAlignment="CENTER" wrapText="true" />
             <Button layoutX="73.0" layoutY="347.0" mnemonicParsing="false" onAction="#reset" prefHeight="38.0" prefWidth="72.0" style="-fx-background-color: #696969;" text="Reset" wrapText="true">
                <font>
                   <Font size="10.0" />
@@ -73,7 +81,7 @@
                </opaqueInsets>
             </Button>
          </children></AnchorPane>
-      <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#backButton" prefWidth="0.0">
+      <Button layoutX="5.0" layoutY="5.0" mnemonicParsing="false" onAction="#backButton" prefWidth="0.0" style="-fx-padding: 1 1 1 1; -fx-background-color: transparent">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -81,6 +89,9 @@
                </image>
             </ImageView>
          </graphic>
+         <effect>
+            <BoxBlur />
+         </effect>
       </Button>
    </children>
 </AnchorPane>

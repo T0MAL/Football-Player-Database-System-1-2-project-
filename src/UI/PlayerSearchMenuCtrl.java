@@ -33,4 +33,8 @@ public class PlayerSearchMenuCtrl {
     public void goCWP(ActionEvent actionEvent) {
         main.showPlayerSearchScreen(4);
     }
+
+    public void backButton(ActionEvent actionEvent) {
+        main.showMainMenu();
+    }
 }
