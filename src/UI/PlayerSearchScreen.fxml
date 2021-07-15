@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.PlayerSearchScreenCtrl">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.PlayerSearchScreenCtrl">
    <children>
        <Label layoutX="337.0" layoutY="5.0" prefHeight="44.0" prefWidth="126.0" style="-fx-background-color: rgb(179,183,245); -fx-padding: 10 10 10 10; " text="Player Search" wrapText="true">
            <font>

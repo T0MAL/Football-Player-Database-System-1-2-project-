@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ClubSearchMenuCtrl">
+<AnchorPane prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ClubSearchMenuCtrl">
    <children>
        <Label layoutX="343.0" layoutY="5.0" prefHeight="44.0" prefWidth="114.0" style="-fx-background-color: rgb(179,183,245); -fx-padding: 10 10 10 10; " text="Club Search" wrapText="true">
            <font>
