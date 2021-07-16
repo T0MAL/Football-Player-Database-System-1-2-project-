@@ -37,4 +37,8 @@ public class MainMenuCtrl {
     public void addPlayerButton(ActionEvent actionEvent) {
         main.showPlayerAddScreen();
     }
+
+    public void loginButt(ActionEvent actionEvent) {
+        main.showLoginWindow();
+    }
 }

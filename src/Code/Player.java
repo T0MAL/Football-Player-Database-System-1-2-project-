@@ -3,7 +3,9 @@ package Code;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     //attributes
     private String name;
     private String country;
@@ -92,6 +94,33 @@ public class Player {
         System.out.println("Number       : "+number);
         System.out.println("Weekly Salary: "+weeklySalary);
         System.out.println("\n");
+    }
+
+    @Override
+    public String toString() {
+        return String.format(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Player)) {
+            return false;
+        }
+        Player p = (Player) o;
+
+        return name.equals(p.getName())
+                && club.equals(p.getClub())
+                && country.equals(p.getCountry())
+                && position.equals(p.getPosition())
+                && age==p.getAge()
+                && height==p.getHeight()
+                && weeklySalary==p.getWeeklySalary()
+                && number==p.getNumber();
     }
 
 }

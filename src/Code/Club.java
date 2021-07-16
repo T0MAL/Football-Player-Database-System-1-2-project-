@@ -1,9 +1,10 @@
 package Code;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Club {
+public class Club implements Serializable {
     //attributes
     private String name;
     private Player[] players;
@@ -75,8 +76,22 @@ public class Club {
         System.out.println("Name of the Club: "+ name);
         System.out.println("Players:");
         for(int i=0;i<playerCount;i++){
-            System.out.println(i+1+". "+players[i].getName());
+            System.out.println(players[i]);
         }
         System.out.println("\n");
+    }
+
+    public void removePlayer(Player p){
+        for(int i=0;i<playerCount;i++){
+            if(players[i].getName().equals(p.getName())){
+                for(int j=i+1;j<playerCount;j++){
+                    players[j-1]=players[j];
+                    pNumbers.remove(p.getNumber());
+                }
+                playerCount--;
+                break;
+            }
+        }
+
     }
 }
