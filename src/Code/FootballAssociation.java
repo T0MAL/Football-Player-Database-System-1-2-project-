@@ -32,37 +32,22 @@ public class FootballAssociation {
             //i.show();
         }
     }
-    public void showAllClubs(){
-        for(Club i:clubs){
-            i.showClub();
-        }
-    }
-    public int addPlayer(Player p){
-        for(Player i: players){
-            if(i.getName().equalsIgnoreCase(p.getName())){
-                return 1;
-            }
-        }
+//    public void showAllClubs(){
+//        for(Club i:clubs){
+//
+//        }
+//    }
+    public void addPlayer(Player p){
+        players.add(p);
+        boolean foundInClub=false;
         for(Club j:clubs){
             if(p.getClub().equalsIgnoreCase(j.getName())){
-                boolean tmp1=j.getPNumbers().contains(p.getNumber());
-                boolean tmp2=j.getPlayerCount()>=7;
-                if(tmp1 && tmp2) {
-                    return 4;
-                }
-                else if(tmp2) {
-                    return 2;
-                }
-                else if(tmp1)
-                    return 3;
-                players.add(p);
                 j.addPlayer(p);
-                return 0;
+                foundInClub=true;
             }
         }
-        players.add(p);
-        clubs.add(new Club(p.getClub(),p));
-        return 0;
+        if(!foundInClub)
+            clubs.add(new Club(p.getClub(),p));
     }
 
 }

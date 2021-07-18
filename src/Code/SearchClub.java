@@ -9,10 +9,9 @@ abstract public class SearchClub {
         List <Player> tmp=new ArrayList();
         for(Club i:c){
             if(i.getName().equalsIgnoreCase(s)){
-                Player[] pp=i.getPlayers();
-                for(int j=0;j<i.getPlayerCount();j++){
-                    if(pp[j].getWeeklySalary() == i.getMaxSalaray()){
-                        tmp.add(pp[j]);
+                for(Player j:i.getPlayers()){
+                    if(j.getWeeklySalary()==i.getMaxSalaray()){
+                        tmp.add(j);
                     }
                 }
                 break;
@@ -21,33 +20,35 @@ abstract public class SearchClub {
         return tmp;
     }
 
-    public static List<Player> maxAge(String s,List<Club> c){
-        List <Player> tmp=new ArrayList();
-        for(Club i:c){
-            if(i.getName().equalsIgnoreCase(s)){
-                Player[] pp=i.getPlayers();
-                for(int j=0;j<i.getPlayerCount();j++){
-                    if(pp[j].getAge()==i.getOldMan()){
-                        tmp.add(pp[j]);
+    public static List<Player> maxAge(String s,List<Club> c) {
+        List<Player> tmp = new ArrayList();
+        for (Club i : c) {
+            if (i.getName().equalsIgnoreCase(s)) {
+                for (Player j : i.getPlayers()) {
+                    if (j.getAge() == i.getOldMan()) {
+                        tmp.add(j);
                     }
                 }
                 break;
             }
+
         }
         return tmp;
     }
+
 
     public static List<Player> maxHeight(String s,List<Club> c){
         List <Player> tmp=new ArrayList();
-        for(Club i:c){
-            if(i.getName().equalsIgnoreCase(s)){
-                Player[] pp=i.getPlayers();
-                for(int j=0;j<i.getPlayerCount();j++)
-                    if (Double.compare(pp[j].getHeight(), i.getTallestMan()) == 0) {
-                        tmp.add(pp[j]);
+        for (Club i : c) {
+            if (i.getName().equalsIgnoreCase(s)) {
+                for (Player j : i.getPlayers()) {
+                    if (j.getHeight() == i.getTallestMan()) {
+                        tmp.add(j);
                     }
+                }
                 break;
             }
+
         }
         return tmp;
     }

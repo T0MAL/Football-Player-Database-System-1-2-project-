@@ -7,23 +7,21 @@ import java.util.List;
 public class Club implements Serializable {
     //attributes
     private String name;
-    private Player[] players;
+    private List<Player> players;
     private int playerCount;
     private double maxSalaray;
     private int oldMan;
     private double tallestMan;
     private double totalSalary;
-    private List<Integer> pNumbers;
 
     public Club(String name,Player p){
+        players=new ArrayList<>();
         this.name=name;
-        players=new Player[7];
         playerCount=0;
         maxSalaray=0;
         oldMan=0;
         tallestMan=0;
         totalSalary=0;
-        pNumbers=new ArrayList();
         addPlayer(p);
     }
 
@@ -35,7 +33,7 @@ public class Club implements Serializable {
         return name;
     }
 
-    public Player[] getPlayers(){
+    public List<Player> getPlayers(){
          return players;
     }
 
@@ -59,45 +57,32 @@ public class Club implements Serializable {
         return playerCount;
     }
 
-    public List<Integer> getPNumbers() {
-        return pNumbers;
-    }
 
     public void addPlayer(Player p){
-        players[playerCount]=p;
+        players.add(p);
         p.setC(this);
-        if(players[playerCount].getWeeklySalary()>maxSalaray)
-            maxSalaray=players[playerCount].getWeeklySalary();
-        if(players[playerCount].getAge()>oldMan)
-            oldMan=players[playerCount].getAge();
-        if(players[playerCount].getHeight()>tallestMan)
-            tallestMan=players[playerCount].getHeight();
-        totalSalary+=players[playerCount].getWeeklySalary();
-        pNumbers.add(p.getNumber());
+        if(players.get(playerCount).getWeeklySalary()>maxSalaray)
+            maxSalaray=players.get(playerCount).getWeeklySalary();
+        if(players.get(playerCount).getAge()>oldMan)
+            oldMan=players.get(playerCount).getAge();
+        if(players.get(playerCount).getHeight()>tallestMan)
+            tallestMan=players.get(playerCount).getHeight();
+        totalSalary+=players.get(playerCount).getWeeklySalary();
         playerCount++;
     }
-    public void showClub(){
-        System.out.println("--- Club Details of "+name+" ---");
-        System.out.println("Name of the Club: "+ name);
-        System.out.println("Players:");
-        for(int i=0;i<playerCount;i++){
-            System.out.println(players[i]);
-        }
-        System.out.println("\n");
-    }
+//    public void showClub(){
+//        System.out.println("--- Club Details of "+name+" ---");
+//        System.out.println("Name of the Club: "+ name);
+//        System.out.println("Players:");
+//        for(int i=0;i<playerCount;i++){
+//            System.out.println(players[i]);
+//        }
+//        System.out.println("\n");
+//    }
 
     public void removePlayer(Player p){
-        for(int i=0;i<playerCount;i++){
-            if(players[i].getName().equals(p.getName())){
-                for(int j=i+1;j<playerCount;j++){
-                    players[j-1]=players[j];
-                }
-                pNumbers.remove(i);
-                playerCount--;
-                break;
-            }
-        }
-
+        players.remove(p);
+        playerCount--;
     }
     @Override
     public String toString() {

@@ -116,6 +116,15 @@ public class ServerThread implements Runnable {
                                 networkUtil.write(tc);
                             }
                         }
+                        else{
+                            transferMarket tmm = new transferMarket();
+                            for(Player i:playerMarket){
+                                tmm.getPlayerMarket().add(i);
+                            }
+                            networkUtil.write(tmm);
+                            transferClub tc=new transferClub("Failed");
+                            networkUtil.write(tc);
+                        }
 
                     }
 

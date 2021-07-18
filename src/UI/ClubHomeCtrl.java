@@ -1,6 +1,5 @@
 package UI;
 
-import Clients.readThread;
 import Code.Club;
 import Code.Player;
 import Transferables.transferClub;
@@ -19,7 +18,6 @@ import java.util.List;
 public class ClubHomeCtrl{
     private Main main;
     private Club c;
-    private readThread rt;
     private List<Player> marketListPlayers;
     NetworkUtil networkUtil;
     @FXML
@@ -88,7 +86,7 @@ public class ClubHomeCtrl{
         ObservableList selectedIndices = myPlayers.getSelectionModel().getSelectedIndices();
         Player tmp = null;
         for(Object o : selectedIndices){
-            tmp=c.getPlayers()[(int)o];
+            tmp= c.getPlayers().get((int) o);
         }
         System.out.println(c);
         transferPlayer tp=new transferPlayer("forSell");

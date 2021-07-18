@@ -1,6 +1,5 @@
 package UI;
 
-import Clients.readThread;
 import Clients.writeThread;
 import Code.Club;
 import Transferables.transferLogin;
