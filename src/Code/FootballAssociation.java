@@ -29,7 +29,7 @@ public class FootballAssociation {
     //methods
     public void showAllPlayers(){
         for(Player i:players){
-            i.show();
+            //i.show();
         }
     }
     public void showAllClubs(){

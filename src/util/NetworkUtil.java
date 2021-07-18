@@ -11,7 +11,6 @@ public class NetworkUtil {
     private final Socket socket;
     private final ObjectOutputStream oos;
     private final ObjectInputStream ois;
-    private Club club;
 
     public NetworkUtil(String s, int port) throws IOException {
         this.socket = new Socket(s, port);
@@ -37,13 +36,6 @@ public class NetworkUtil {
     public void closeConnection() throws IOException {
         ois.close();
         oos.close();
-    }
-    public Club getClub() {
-        return club;
-    }
-
-    public void setClub(Club club) {
-        this.club = club;
     }
 }
 

@@ -1,19 +1,29 @@
 package Clients;
 
+import Code.Player;
 import Transferables.transferMarket;
+import UI.ClubHomeCtrl;
+import javafx.scene.control.ListView;
 import util.NetworkUtil;
 
 import java.io.IOException;
+import java.util.List;
 
 public class readThread implements Runnable{
     private final Thread thr;
     private NetworkUtil networkUtil;
+    ListView lv;
 
-    public readThread(NetworkUtil networkUtil) {
+    List<Player> marketListPlayers;
+    public readThread(NetworkUtil networkUtil, List<Player> mlp, ListView lv) {
         this.thr = new Thread(this);
         this.networkUtil=networkUtil;
+        this.marketListPlayers=mlp;
+        this.lv=lv;
         thr.start();
     }
+
+
 
     @Override
     public void run() {
@@ -22,7 +32,9 @@ public class readThread implements Runnable{
                 Object o=networkUtil.read();
                 if(o instanceof transferMarket){
                     transferMarket tm=(transferMarket) o;
-
+                    lv.getItems().clear();
+                    marketListPlayers=tm.getPlayerMarket();
+                    lv.getItems().addAll(marketListPlayers);
                 }
             }
         }
@@ -36,6 +48,5 @@ public class readThread implements Runnable{
             }
         }
     }
-
 
 }

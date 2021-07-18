@@ -27,6 +27,10 @@ public class Club implements Serializable {
         addPlayer(p);
     }
 
+    public Club(){
+
+    }
+
     public String getName() {
         return name;
     }
@@ -61,6 +65,7 @@ public class Club implements Serializable {
 
     public void addPlayer(Player p){
         players[playerCount]=p;
+        p.setC(this);
         if(players[playerCount].getWeeklySalary()>maxSalaray)
             maxSalaray=players[playerCount].getWeeklySalary();
         if(players[playerCount].getAge()>oldMan)
@@ -86,12 +91,32 @@ public class Club implements Serializable {
             if(players[i].getName().equals(p.getName())){
                 for(int j=i+1;j<playerCount;j++){
                     players[j-1]=players[j];
-                    pNumbers.remove(p.getNumber());
                 }
+                pNumbers.remove(i);
                 playerCount--;
                 break;
             }
         }
+
+    }
+    @Override
+    public String toString() {
+        return String.format(name);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Club)) {
+            return false;
+        }
+        Club c = (Club) o;
+
+        return name.equals(c.getName());
 
     }
 }

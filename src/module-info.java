@@ -7,4 +7,5 @@ module myjfx {
     opens Server to javafx.graphics, javafx.fxml,javafx.base;
     opens util to javafx.graphics, javafx.fxml,javafx.base;
     opens Clients to javafx.graphics, javafx.fxml,javafx.base;
+    opens Code to javafx.graphics, javafx.fxml,javafx.base;
 }

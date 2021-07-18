@@ -15,6 +15,7 @@ public class Player implements Serializable {
     private String position;
     private double height;
     private double weeklySalary;
+    private Club c;
 
 
     //getters and setters
@@ -82,7 +83,6 @@ public class Player implements Serializable {
         return weeklySalary;
     }
 
-    //methods
     public void show(){
         System.out.println("--- Player Details of: "+name+" ---");
         System.out.println("Name         : "+name);
@@ -94,6 +94,14 @@ public class Player implements Serializable {
         System.out.println("Number       : "+number);
         System.out.println("Weekly Salary: "+weeklySalary);
         System.out.println("\n");
+    }
+
+    public Club getC() {
+        return c;
+    }
+
+    public void setC(Club c) {
+        this.c = c;
     }
 
     @Override
@@ -113,14 +121,14 @@ public class Player implements Serializable {
         }
         Player p = (Player) o;
 
-        return name.equals(p.getName())
-                && club.equals(p.getClub())
-                && country.equals(p.getCountry())
-                && position.equals(p.getPosition())
-                && age==p.getAge()
-                && height==p.getHeight()
-                && weeklySalary==p.getWeeklySalary()
-                && number==p.getNumber();
+        return name.equals(p.getName());
+//                && club.equals(p.getClub())
+//                && country.equals(p.getCountry())
+//                && position.equals(p.getPosition())
+//                && age==p.getAge()
+//                && height==p.getHeight()
+//                && weeklySalary==p.getWeeklySalary()
+//                && number==p.getNumber();
     }
 
 }

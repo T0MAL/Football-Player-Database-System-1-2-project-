@@ -10,13 +10,9 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.NetworkUtil;
 
-import java.io.IOException;
-import java.util.List;
 
 public class LoginWindowCtrl {
     private Main main;
-    //private List<Club> clubList;
-    Stage s;
     NetworkUtil nu;
     @FXML
     private TextField clubName;
@@ -25,8 +21,8 @@ public class LoginWindowCtrl {
         this.main = main;
     }
 
-    public void init(Stage s){
-        this.s=s;
+    public void init(){
+
     }
 
     public void goButt(ActionEvent actionEvent) {
@@ -38,10 +34,8 @@ public class LoginWindowCtrl {
                     transferLogin tmp=(transferLogin) nu.read();
 
                     if(tmp.getResponse().equals("Accepted")){
-                        Club c=tmp.getClub();
-                        c.showClub();
-                        nu.setClub(c);
-                        main.showClubHome(s,c,nu);
+                        Club club=tmp.getClub();
+                        main.showClubHome(club,nu);
                     }
                     else if(tmp.getResponse().equals("Exists")){
                         System.out.println("Exists");

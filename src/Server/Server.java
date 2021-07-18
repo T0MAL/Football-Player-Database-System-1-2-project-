@@ -1,6 +1,7 @@
 package Server;
 
 import Code.Club;
+import Code.FileIO;
 import Code.FootballAssociation;
 import Code.Player;
 import Transferables.transferLogin;
@@ -14,22 +15,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Server implements Runnable {
+public class Server{
     private ServerSocket serverSocket;
-    Map<Club, NetworkUtil> clientList;
-    Map<Player,Club> playerMarket;
-    volatile private boolean serverOn;
-    FootballAssociation fa;
+    private Map<Club, NetworkUtil> clientList;
+    private List<Player> playerMarket;
+    private FootballAssociation fa;
 
-    public Server(FootballAssociation fa) {
-
-        this.fa = fa;
-        playerMarket=new HashMap<>();
-        serverOn = true;
+    public Server() {
+        try {
+            fa=new FootballAssociation();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        playerMarket=new ArrayList<>();
         clientList=new HashMap<>();
         try {
             serverSocket = new ServerSocket(33333);
-            System.out.println("Server Online");
+            System.out.println("ServerOn");
+            while (true) {
+                Socket clientSocket = serverSocket.accept();
+                serve(clientSocket);
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        try {
+            serverSocket.close();
+            FileIO.writeFile(fa.getPlayers());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,7 +63,6 @@ public class Server implements Runnable {
                     networkUtil.write(tl);
                     clientList.put(c, networkUtil);
                     new ServerThread(clientList, networkUtil,playerMarket,fa);
-
                     break;
                 }
                 else{
@@ -68,19 +79,7 @@ public class Server implements Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        try {
-            while (serverOn) {
-                Socket clientSocket = serverSocket.accept();
-                serve(clientSocket);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void setServerOn(boolean serverOn) {
-        this.serverOn = serverOn;
+    public static void main(String[] args) {
+        new Server();
     }
 }
