@@ -5,7 +5,7 @@
 
 .text-field {
     -fx-font-family: "Arial";
-    -fx-prompt-text-fill: #61606C;
+    -fx-prompt-text-fill: #7a7a87;
     -fx-text-fill: linear-gradient(#0e0e0e, #312f2f);
     -fx-font-size: 14px;
     -fx-border-color: #151414;

@@ -5,6 +5,7 @@ import Code.Club;
 import Transferables.transferLogin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import util.NetworkUtil;
@@ -15,13 +16,15 @@ public class LoginWindowCtrl {
     NetworkUtil nu;
     @FXML
     private TextField clubName;
+    @FXML
+    private Label error;
 
     public void setMain(Main main) {
         this.main = main;
     }
 
     public void init(){
-
+        error.setText("");
     }
 
     public void goButt(ActionEvent actionEvent) {
@@ -33,15 +36,16 @@ public class LoginWindowCtrl {
                     transferLogin tmp=(transferLogin) nu.read();
 
                     if(tmp.getResponse().equals("Accepted")){
+                        error.setText("");
                         Club club=tmp.getClub();
                         main.showClubHome(club,nu);
                     }
                     else if(tmp.getResponse().equals("Exists")){
-                        System.out.println("Exists");
+                        error.setText("Already logged in");
                         nu.closeConnection();
                     }
                     else{
-                        System.out.println("Cant login");
+                        error.setText("Club not found");
                         nu.closeConnection();
                     }
                 } catch (Exception e) {

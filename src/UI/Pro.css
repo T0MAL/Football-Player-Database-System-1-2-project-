@@ -1,0 +1,6 @@
+.list-cell { -fx-text-fill: black;
+    -fx-cell-size: 39;
+    -fx-font-size: 18;}
+.list-cell:odd {
+    -fx-background-color: white; /* 1 */ }
+.list-cell:even { -fx-background-color: #a8afaf; /* for information */ }

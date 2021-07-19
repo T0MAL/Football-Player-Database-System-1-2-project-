@@ -34,8 +34,8 @@ public class Main extends Application {
         ctrl.init();
 
         stg.setTitle("Login");
-        Scene scn=new Scene(root,800,450);
-        scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
+        Scene scn=new Scene(root,960,540);
+        scn.getStylesheets().add(getClass().getResource("Style2.css").toExternalForm());
         stg.setScene(scn);
         stg.show();
     }
@@ -56,7 +56,7 @@ public class Main extends Application {
         ctrl.init(c,networkUtil);
 
         stg.setTitle("Home");
-        Scene scn=new Scene(root,800,450);
+        Scene scn=new Scene(root,960,540);
         scn.getStylesheets().add(getClass().getResource("Style.css").toExternalForm());
         stg.setScene(scn);
         stg.show();
