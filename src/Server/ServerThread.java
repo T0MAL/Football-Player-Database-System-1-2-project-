@@ -3,9 +3,7 @@ package Server;
 import Code.Club;
 import Code.FootballAssociation;
 import Code.Player;
-import Transferables.transferClub;
-import Transferables.transferMarket;
-import Transferables.transferPlayer;
+import Transferables.*;
 import util.NetworkUtil;
 
 import java.util.List;
@@ -32,11 +30,36 @@ public class ServerThread implements Runnable {
         try{
             while(true){
                 Object o=networkUtil.read();
-                if(o instanceof transferMarket) {
-                    transferMarket tm = (transferMarket) o;
-                    for(Player i:playerMarket){
-                        tm.getPlayerMarket().add(i);
+                if(o instanceof transferLogin){
+                    transferLogin tl = (transferLogin) o;
+                    boolean found=false;
+                    for (Club c : fa.getClubs()) {
+                        if (c.getName().equalsIgnoreCase(tl.getName()) ) {
+                            found = true;
+                            if(!clubList.containsKey(c)) {
+                                tl.setResponse("Accepted");
+                                tl.setClub(c);
+                                networkUtil.write(tl);
+                                clubList.put(c, networkUtil);
+                                transferPlayerBroadcast tpb=new transferPlayerBroadcast();
+                                tpb.setPlayerMarket(playerMarket);
+                                networkUtil.write(tpb);
+                                break;
+                            }
+                            else{
+                                tl.setResponse("Exists");
+                                networkUtil.write(tl);
+                            }
+                        }
                     }
+                    if(!found) {
+                        tl.setResponse("Denied");
+                        networkUtil.write(tl);
+                    }
+                }
+                else if(o instanceof transferMarket) {
+                    transferMarket tm = (transferMarket) o;
+                    tm.setPlayerMarket(playerMarket);
                     networkUtil.write(tm);
                 }
                 else if(o instanceof transferPlayer){
@@ -52,33 +75,26 @@ public class ServerThread implements Runnable {
                         if(!e){
                             playerMarket.add(tp.getPlayer());
                         }
-                        transferMarket tmm = new transferMarket();
-                        for(Player i:playerMarket){
-                            tmm.getPlayerMarket().add(i);
+                        transferPlayerBroadcast tpb=new transferPlayerBroadcast();
+                        tpb.setPlayerMarket(playerMarket);
+                        for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                            i.getValue().write(tpb);
                         }
-                        networkUtil.write(tmm);
                     }
                     else if(tp.getMethod().equals("Buy")){
-                        System.out.println("mark 0");
                         boolean e=false;
                         Player p=null;
                         int indx=0;
                         for(Player i:playerMarket){
-                            System.out.println(i);
-                            System.out.println(i.equals(tp.getPlayer()));
                             if(i.equals(tp.getPlayer())){
-                                System.out.println("mark1");
                                 e=true;
-                                //playerMarket.remove(i);
-                                System.out.println(playerMarket);
                                 break;
                             }
                             indx++;
                         }
                         Club buyer=null;
+                        Club seller=null;
                         if(e){
-                            System.out.println("mark 2");
-                            Club seller=null;
                             for(Player i:fa.getPlayers()){
                                 if(i.equals(tp.getPlayer())){
                                     p=i;
@@ -89,7 +105,7 @@ public class ServerThread implements Runnable {
                             if(!seller.equals(tp.getFromClub())) {
                                 playerMarket.remove(indx);
                                 for (Club i : fa.getClubs()) {
-                                    if (i.equals(tp.getFromClub()) && !i.equals(seller)) {
+                                    if (i.equals(tp.getFromClub())) {
                                         i.addPlayer(p);
                                         p.setC(i);
                                         buyer = i;
@@ -98,31 +114,35 @@ public class ServerThread implements Runnable {
                                         i.removePlayer(p);
                                     }
                                 }
-                                transferMarket tmm = new transferMarket();
-                                for(Player i:playerMarket){
-                                    tmm.getPlayerMarket().add(i);
-                                }
-                                networkUtil.write(tmm);
-                                transferClub tc=new transferClub("Done");
+                                transferMarket tm = new transferMarket();
+                                tm.setPlayerMarket(playerMarket);
+                                networkUtil.write(tm);
+                                transferClubBackground tc=new transferClubBackground("Done");
+                                tc.setClub(buyer);
                                 networkUtil.write(tc);
+                                tc.setClub(seller);
+                                for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                                   if( i.getKey().equals(seller)){
+                                        i.getValue().write(tc);
+                                        break;
+                                    }
+                                }
+                                transferPlayerBroadcast tpb=new transferPlayerBroadcast();
+                                tpb.setPlayerMarket(playerMarket);
+                                for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                                    i.getValue().write(tpb);
+                                }
                             }
                             else{
-                                transferMarket tmm = new transferMarket();
-                                for(Player i:playerMarket){
-                                    tmm.getPlayerMarket().add(i);
-                                }
-                                networkUtil.write(tmm);
-                                transferClub tc=new transferClub("Failed");
+                                transferClub tc=new transferClub("Same Club");
                                 networkUtil.write(tc);
                             }
                         }
                         else{
                             transferMarket tmm = new transferMarket();
-                            for(Player i:playerMarket){
-                                tmm.getPlayerMarket().add(i);
-                            }
+                            tmm.setPlayerMarket(playerMarket);
                             networkUtil.write(tmm);
-                            transferClub tc=new transferClub("Failed");
+                            transferClub tc=new transferClub("Unavailable");
                             networkUtil.write(tc);
                         }
 

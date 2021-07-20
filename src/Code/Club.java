@@ -104,4 +104,10 @@ public class Club implements Serializable {
         return name.equals(c.getName());
 
     }
+
+//    @Override
+//    public int hashCode()
+//    {
+//        return ;
+//    }
 }

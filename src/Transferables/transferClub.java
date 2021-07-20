@@ -8,14 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class transferClub implements Serializable {
-    String s;
+    String msg;
+    Club club;
 
-
-    public transferClub(String s){
-        this.s=s;
+    public transferClub(String msg){
+        this.msg=msg;
     }
 
-    public String getC() {
-        return s;
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public Club getClub() {
+        return club;
+    }
+
+    public void setClub(Club club) {
+        this.club = club;
     }
 }

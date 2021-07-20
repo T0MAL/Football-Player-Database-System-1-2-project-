@@ -16,7 +16,7 @@
 
 <AnchorPane prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.ClubHomeCtrl">
    <children>
-      <TabPane layoutX="6.0" layoutY="75.0" prefHeight="458.0" prefWidth="946.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutX="6.0" layoutY="75.0" prefHeight="458.0" prefWidth="946.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="hTab" onSelectionChanged="#homeTab" text="Home">
             <content>
@@ -67,7 +67,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="920.0">
                      <children>
-                        <ListView fx:id="marketList" focusTraversable="false" prefHeight="347.0" prefWidth="934.0" />
+                        <ListView fx:id="marketList" onMouseClicked="#handleMouseClick2" focusTraversable="false" prefHeight="347.0" prefWidth="934.0" />
                         <Button layoutX="827.0" layoutY="349.0" mnemonicParsing="false" onAction="#getMarketButt" text="Get Market" />
                      </children>
                   </AnchorPane>

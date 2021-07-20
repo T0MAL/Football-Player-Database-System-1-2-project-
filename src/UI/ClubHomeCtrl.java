@@ -1,5 +1,6 @@
 package UI;
 
+import Clients.readThread;
 import Code.Club;
 import Code.Player;
 import Code.SearchPlayer;
@@ -32,10 +33,12 @@ public class ClubHomeCtrl{
     public Tab tTAb;
     public TextField searchField2;
     public Button searchBoob;
+    public TabPane tabPane;
     private Main main;
     private Club c;
     private List<Player> marketListPlayers;
     NetworkUtil networkUtil;
+
     @FXML
     private Label clubTitle;
     @FXML
@@ -51,97 +54,17 @@ public class ClubHomeCtrl{
         this.main = main;
     }
 
-    public void init(Club c,NetworkUtil networkUtil){
-        this.c=c;
-        clubTitle.setText(this.c.getName());
-        this.networkUtil=networkUtil;
-        myPlayers.getItems().addAll(c.getPlayers());
-
+    public void init(int indx){
+        clubTitle.setText(main.club.getName());
+        tabPane.getSelectionModel().select(indx);
     }
 
     synchronized public void getMarketButt(ActionEvent actionEvent) throws InterruptedException {
         transferMarket tm=new transferMarket();
         try {
-            networkUtil.write(tm);
-            Object o = networkUtil.read();
-            if (o instanceof transferMarket) {
-                transferMarket tmm = (transferMarket) o;
-                marketList.getItems().clear();
-                marketListPlayers = tmm.getPlayerMarket();
-                System.out.println(marketListPlayers);
-                marketList.getItems().addAll(marketListPlayers);
-            }
-        }catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            main.getNetworkUtil().write(tm);
         }
-    }
-
-    synchronized public void sellButt(ActionEvent actionEvent) {
-        ObservableList selectedIndices = myPlayers.getSelectionModel().getSelectedIndices();
-        Player tmp = null;
-        for(Object o : selectedIndices){
-            tmp= c.getPlayers().get((int) o);
-        }
-        System.out.println(c);
-        transferPlayer tp=new transferPlayer("forSell");
-        tp.setFromClub(c);
-        tp.setPlayer(tmp);
-        System.out.println("here 0");
-        try {
-            networkUtil.write(tp);
-            System.out.println("here 1");
-            Object o = networkUtil.read();
-            System.out.println("here 2");
-            if (o instanceof transferMarket) {
-                transferMarket tmm = (transferMarket) o;
-                marketList.getItems().clear();
-                System.out.println(tmm.getPlayerMarket());
-                marketListPlayers = tmm.getPlayerMarket();
-                marketList.getItems().addAll(marketListPlayers);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    synchronized public void buyButt(ActionEvent actionEvent) {
-        ObservableList selectedIndices = marketList.getSelectionModel().getSelectedIndices();
-        Player tmp = null;
-        System.out.println(marketListPlayers);
-        for(Object o : selectedIndices){
-            tmp= marketListPlayers.get((int)o);
-        }
-        //System.out.println(tmp);
-        transferPlayer tp=new transferPlayer("Buy");
-        tp.setFromClub(c);
-        tp.setPlayer(tmp);
-        try {
-            networkUtil.write(tp);
-            Object o = networkUtil.read();
-            Object oo = networkUtil.read();
-            if (o instanceof transferMarket) {
-                transferMarket tmm = (transferMarket) o;
-                marketList.getItems().clear();
-                marketListPlayers = tmm.getPlayerMarket();
-                marketList.getItems().addAll(marketListPlayers);
-            }
-            if (oo instanceof transferClub) {
-                transferClub cc = (transferClub) oo;
-                if(cc.getC().equals("Done")){
-                    c.addPlayer(tmp);
-                    tmp.setClub(c.getName());
-                    myPlayers.getItems().clear();
-                    myPlayers.getItems().addAll(c.getPlayers());
-                }
-                else if(cc.getC().equals("Failed")){
-
-                }
-
-            }
-        } catch (Exception e) {
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -168,6 +91,7 @@ public class ClubHomeCtrl{
             tmp= c.getPlayers().get((int) o);
         }
         PlayerProfileCtrl ctrl = loader.getController();
+        ctrl.setMain(main);
         ctrl.init(tmp);
 
         final Stage dialog = new Stage();
@@ -180,30 +104,40 @@ public class ClubHomeCtrl{
 
     public void reset(ActionEvent actionEvent) {
         myPlayers.getItems().clear();
-        myPlayers.getItems().addAll(c.getPlayers());
+        myPlayers.getItems().addAll(main.getClub().getPlayers());
         searchField.clear();
         searchField2.clear();
     }
 
     public void transfersTab(Event event) {
+        if(tTAb.isSelected()) {
+            main.setInMarket(true);
+            marketListPlayers = main.getMarketListPlayers();
+            marketList.getItems().clear();
+            if (marketListPlayers != null)
+                marketList.getItems().addAll(marketListPlayers);
+        }
+        else{
+            main.setInMarket(false);
+        }
     }
 
     public void clubTab(Event event) {
+
+
     }
 
     public void squadTab(Event event) {
-        if(msTab.isSelected()){
-            searchMode.getItems().addAll("All Players","Search By Name","Search By Country","Search By Position",
-                    "Search By Salary Range");
-            searchMode.setValue("All Players");
+        if(msTab.isSelected()) {
+            c = main.getClub();
+            myPlayers.getItems().clear();
+            myPlayers.getItems().addAll(c.getPlayers());
         }
-        searchMode.setOnAction(this::gg);
-        searchField2.setEditable(false);
-        searchField.setEditable(false);
-        searchBoob.setDisable(true);
     }
 
     public void homeTab(Event event) {
+
+
     }
 
     public void searchButt(ActionEvent actionEvent) {
@@ -214,24 +148,24 @@ public class ClubHomeCtrl{
         else if(s.equals("Search By Name")){
             String ss=searchField.getText();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(SearchPlayer.searchByName(ss,c.getPlayers()));
+            myPlayers.getItems().addAll(SearchPlayer.searchByName(ss,main.getClub().getPlayers()));
         }
         else if(s.equals("By Club and Country")){
             String ss=searchField.getText();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(SearchPlayer.searchByCountryNClub(ss,c.getName(),c.getPlayers()));
+            myPlayers.getItems().addAll(SearchPlayer.searchByCountryNClub(ss,main.getClub().getName(),main.getClub().getPlayers()));
         }
         else if(s.equals("Search By Position")){
             String ss=searchField.getText();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(SearchPlayer.searchByPosition(ss,c.getPlayers()));
+            myPlayers.getItems().addAll(SearchPlayer.searchByPosition(ss,main.getClub().getPlayers()));
         }
         else if(s.equals("Search By Salary Range")) {
             String ss = searchField.getText();
             String sss = searchField2.getText();
             if (Utility.isInt(ss) && Utility.isInt(sss)) {
                 myPlayers.getItems().clear();
-                myPlayers.getItems().addAll(SearchPlayer.searchBySalaryRange(Integer.parseInt(sss), Integer.parseInt(ss), c.getPlayers()));
+                myPlayers.getItems().addAll(SearchPlayer.searchBySalaryRange(Integer.parseInt(sss), Integer.parseInt(ss), main.getClub().getPlayers()));
             }
         }
     }
@@ -240,7 +174,7 @@ public class ClubHomeCtrl{
         String s=searchMode.getValue();
         if(s.equals("All Players")){
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(c.getPlayers());
+            myPlayers.getItems().addAll(main.getClub().getPlayers());
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -251,7 +185,7 @@ public class ClubHomeCtrl{
         }
         else if(s.equals("Search By Name")){
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(c.getPlayers());
+            myPlayers.getItems().addAll(main.getClub().getPlayers());
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -262,7 +196,7 @@ public class ClubHomeCtrl{
         }
         else if(s.equals("By Country")){
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(c.getPlayers());
+            myPlayers.getItems().addAll(main.getClub().getPlayers());
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -273,7 +207,7 @@ public class ClubHomeCtrl{
         }
         else if(s.equals("Search By Position")){
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(c.getPlayers());
+            myPlayers.getItems().addAll(main.getClub().getPlayers());
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -284,7 +218,7 @@ public class ClubHomeCtrl{
         }
         else if(s.equals("Search By Salary Range")){
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(c.getPlayers());
+            myPlayers.getItems().addAll(main.getClub().getPlayers());
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(true);
@@ -295,4 +229,32 @@ public class ClubHomeCtrl{
         }
     }
 
+    public void handleMouseClick2(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PlayerProfileMarket.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+        ObservableList selectedIndices = marketList.getSelectionModel().getSelectedIndices();
+        Player tmp = null;
+        for(Object o : selectedIndices){
+            tmp= marketListPlayers.get((int) o);
+        }
+        PlayerProfileMarketCtrl ctrl = loader.getController();
+        ctrl.setMain(main);
+        ctrl.init(tmp);
+
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        Scene dialogScene = new Scene(root, 600, 300);
+        dialogScene.getStylesheets().add(getClass().getResource("Pro.css").toExternalForm());
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
 }

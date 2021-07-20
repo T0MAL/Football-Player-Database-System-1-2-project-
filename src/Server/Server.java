@@ -49,34 +49,10 @@ public class Server{
 
     private void serve(Socket clientSocket) throws IOException, ClassNotFoundException {
         NetworkUtil networkUtil = new NetworkUtil(clientSocket);
-        Object o = networkUtil.read();
-        transferLogin tl = (transferLogin) o;
-        boolean found=false;
+        new ServerThread(clientList, networkUtil,playerMarket,fa);
 
-        for (Club c : fa.getClubs()) {
-            if (c.getName().equalsIgnoreCase(tl.getName()) ) {
-                found = true;
-                if(!clientList.containsKey(c)) {
-                    System.out.println("loggedin");
-                    tl.setResponse("Accepted");
-                    tl.setClub(c);
-                    networkUtil.write(tl);
-                    clientList.put(c, networkUtil);
-                    new ServerThread(clientList, networkUtil,playerMarket,fa);
-                    break;
-                }
-                else{
-                    tl.setResponse("Exists");
-                    networkUtil.write(tl);
-                    networkUtil.closeConnection();
-                }
-            }
-        }
-        if(!found) {
-            tl.setResponse("Denied");
-            networkUtil.write(tl);
-            networkUtil.closeConnection();
-        }
+
+
     }
 
     public static void main(String[] args) {

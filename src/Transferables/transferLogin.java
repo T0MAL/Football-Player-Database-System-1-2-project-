@@ -6,6 +6,7 @@ import java.io.Serializable;
 
 public class transferLogin implements Serializable {
     private String name;
+    private String pass;
     private String response;
     private Club club;
 
@@ -17,8 +18,16 @@ public class transferLogin implements Serializable {
         this.club = club;
     }
 
+    public transferLogin(String name,String pass){
+        this.name=name;
+        this.pass=pass;
+        this.response="pending";
+        this.club=null;
+    }
+
     public transferLogin(String name){
         this.name=name;
+        //this.pass=pass;
         this.response="pending";
         this.club=null;
     }
