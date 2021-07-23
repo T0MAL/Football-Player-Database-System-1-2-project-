@@ -1,13 +1,7 @@
 package UI;
 
-import Clients.readThread;
-import Code.Club;
-import Code.Player;
-import Code.SearchPlayer;
-import Code.Utility;
-import Transferables.transferClub;
-import Transferables.transferMarket;
-import Transferables.transferPlayer;
+import Code.*;
+import Transferables.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -17,13 +11,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import util.NetworkUtil;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 public class ClubHomeCtrl{
@@ -34,10 +26,14 @@ public class ClubHomeCtrl{
     public TextField searchField2;
     public Button searchBoob;
     public TabPane tabPane;
+    public ChoiceBox<String> searchModeClub;
+    public ListView myPlayersClub;
+    public Label yearlySalary;
+    public ListView countryWiseCount;
     private Main main;
-    private Club c;
     private List<Player> marketListPlayers;
-    NetworkUtil networkUtil;
+    private List<Player> squadListPlayers;
+    private List<Player> clubListPlayers;
 
     @FXML
     private Label clubTitle;
@@ -56,8 +52,46 @@ public class ClubHomeCtrl{
 
     public void init(int indx){
         clubTitle.setText(main.club.getName());
+        searchMode.getItems().addAll("All Players","Search By Name","Search By Country","Search By Position",
+                    "Search By Salary Range");
+        searchModeClub.getItems().addAll("All Players","Player(s) with the maximum salary of a club","Player(s) with the maximum age of a club","Player(s) with the maximum height of a club");
+        searchMode.setValue("All Players");
+        searchModeClub.setValue("All Players");
+        searchMode.setOnAction(this::gg);
+        searchModeClub.setOnAction(this::wp);
+        squadListPlayers=main.getClub().getPlayers();
+        myPlayers.getItems().addAll(squadListPlayers);
+        clubListPlayers=main.getClub().getPlayers();
+        myPlayersClub.getItems().addAll(clubListPlayers);
+        countryWiseCount.getItems().addAll(SearchPlayer.countryWiseCount(main.getClub().getPlayers()));
+        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.valueOf(SearchClub.totalSalary(main.getClub().getName(), Collections.singletonList(main.getClub()))));
         tabPane.getSelectionModel().select(indx);
     }
+
+    private void wp(Event event) {
+            String s=(String) searchModeClub.getValue();
+            if(s.equals("All Players")){
+                clubListPlayers=main.getClub().getPlayers();
+                myPlayersClub.getItems().clear();
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+            else if(s.equals("Player(s) with the maximum salary of a club")){
+                myPlayersClub.getItems().clear();
+                clubListPlayers= SearchClub.maxSalary(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+            else if(s.equals("Player(s) with the maximum age of a club")){
+                myPlayersClub.getItems().clear();
+                clubListPlayers= SearchClub.maxAge(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+            else if(s.equals("Player(s) with the maximum height of a club")){
+                myPlayersClub.getItems().clear();
+                clubListPlayers= SearchClub.maxHeight(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+
+        }
 
     synchronized public void getMarketButt(ActionEvent actionEvent) throws InterruptedException {
         transferMarket tm=new transferMarket();
@@ -70,7 +104,11 @@ public class ClubHomeCtrl{
     }
 
     public void logOut(ActionEvent actionEvent) {
-        //
+        try {
+            main.getNetworkUtil().write(new transferLogOUT(main.getClub().getName()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void handleMouseClick(MouseEvent mouseEvent) {
@@ -88,7 +126,7 @@ public class ClubHomeCtrl{
         ObservableList selectedIndices = myPlayers.getSelectionModel().getSelectedIndices();
         Player tmp = null;
         for(Object o : selectedIndices){
-            tmp= c.getPlayers().get((int) o);
+            tmp= squadListPlayers.get((int) o);
         }
         PlayerProfileCtrl ctrl = loader.getController();
         ctrl.setMain(main);
@@ -103,8 +141,9 @@ public class ClubHomeCtrl{
     }
 
     public void reset(ActionEvent actionEvent) {
+        squadListPlayers=main.getClub().getPlayers();
         myPlayers.getItems().clear();
-        myPlayers.getItems().addAll(main.getClub().getPlayers());
+        myPlayers.getItems().addAll(squadListPlayers);
         searchField.clear();
         searchField2.clear();
     }
@@ -123,49 +162,141 @@ public class ClubHomeCtrl{
     }
 
     public void clubTab(Event event) {
-
-
+        if(cTab.isSelected()) {
+            System.out.println(searchModeClub.getValue());
+            if(searchModeClub.getValue().equals("All Players")){
+                clubListPlayers=main.getClub().getPlayers();
+                myPlayersClub.getItems().clear();
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+            else if(searchModeClub.getValue().equals("Player(s) with the maximum salary of a club")){
+                myPlayersClub.getItems().clear();
+                clubListPlayers= SearchClub.maxSalary(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+            else if(searchModeClub.getValue().equals("Player(s) with the maximum age of a club")){
+                myPlayersClub.getItems().clear();
+                clubListPlayers= SearchClub.maxAge(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+            else if(searchModeClub.getValue().equals("Player(s) with the maximum height of a club")){
+                myPlayersClub.getItems().clear();
+                clubListPlayers= SearchClub.maxHeight(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                myPlayersClub.getItems().addAll(clubListPlayers);
+            }
+        }
     }
 
     public void squadTab(Event event) {
         if(msTab.isSelected()) {
-            c = main.getClub();
-            myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(c.getPlayers());
+            if(searchMode.getValue().equals("All Players")){
+                squadListPlayers=main.getClub().getPlayers();
+                myPlayers.getItems().clear();
+                myPlayers.getItems().addAll(squadListPlayers);
+//                searchField.clear();
+//                searchField2.clear();
+                searchField2.setEditable(false);
+                searchField.setEditable(false);
+                searchBoob.setDisable(true);
+                searchField.setPromptText("");
+                searchField2.setPromptText("");
+            }
+            else if(searchMode.getValue().equals("Search By Name")){
+                String ss=searchField.getText();
+                myPlayers.getItems().clear();
+                squadListPlayers=SearchPlayer.searchByName(ss,main.getClub().getPlayers());
+                myPlayers.getItems().addAll(squadListPlayers);
+//                searchField.clear();
+//                searchField2.clear();
+                searchField2.setEditable(false);
+                searchField.setEditable(true);
+                searchBoob.setDisable(false);
+                searchField.setPromptText("Enter Name");
+                searchField2.setPromptText("");
+            }
+            else if(searchMode.getValue().equals("Search By Country")){
+                String ss=searchField.getText();
+                myPlayers.getItems().clear();
+                squadListPlayers=(SearchPlayer.searchByCountryNClub(ss,main.getClub().getName(),main.getClub().getPlayers()));
+                myPlayers.getItems().addAll(squadListPlayers);
+//                searchField.clear();
+//                searchField2.clear();
+                searchField2.setEditable(false);
+                searchField.setEditable(true);
+                searchBoob.setDisable(false);
+                searchField.setPromptText("Enter Country");
+                searchField2.setPromptText(null);
+            }
+            else if(searchMode.getValue().equals("Search By Position")){
+                String ss=searchField.getText();
+                myPlayers.getItems().clear();
+                squadListPlayers=SearchPlayer.searchByPosition(ss,main.getClub().getPlayers());
+                myPlayers.getItems().addAll(squadListPlayers);
+//                searchField.clear();
+//                searchField2.clear();
+                searchField2.setEditable(false);
+                searchField.setEditable(true);
+                searchBoob.setDisable(false);
+                searchField.setPromptText("Enter Position");
+                searchField2.setPromptText("");
+            }
+            else if(searchMode.getValue().equals("Search By Salary Range")){
+                String ss = searchField.getText();
+                String sss = searchField2.getText();
+                if (Utility.isInt(ss) && Utility.isInt(sss)) {
+                    myPlayers.getItems().clear();
+                    squadListPlayers=SearchPlayer.searchBySalaryRange(Integer.parseInt(sss), Integer.parseInt(ss), main.getClub().getPlayers());
+                    myPlayers.getItems().addAll(squadListPlayers);
+                }
+//                searchField.clear();
+//                searchField2.clear();
+                searchField2.setEditable(true);
+                searchField.setEditable(true);
+                searchBoob.setDisable(false);
+                searchField.setPromptText("Enter maximum salary");
+                searchField2.setPromptText("Enter minimum salary");
+            }
         }
     }
 
     public void homeTab(Event event) {
-
-
+        if(hTab.isSelected()) {
+            //System.out.println(countryWiseCount.getItems());
+            //countryWiseCount.getItems().clear();
+            //countryWiseCount.getItems().addAll(SearchPlayer.countryWiseCount(main.getClub().getPlayers()));
+            //yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.valueOf(SearchClub.totalSalary(main.getClub().getName(), Collections.singletonList(main.getClub()))));
+        }
     }
 
     public void searchButt(ActionEvent actionEvent) {
         String s=(String) searchMode.getSelectionModel().getSelectedItem();
         if(s.equals("All Players")){
-
         }
         else if(s.equals("Search By Name")){
             String ss=searchField.getText();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(SearchPlayer.searchByName(ss,main.getClub().getPlayers()));
+            squadListPlayers=SearchPlayer.searchByName(ss,main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
         }
-        else if(s.equals("By Club and Country")){
+        else if(s.equals("Search By Country")){
             String ss=searchField.getText();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(SearchPlayer.searchByCountryNClub(ss,main.getClub().getName(),main.getClub().getPlayers()));
+            squadListPlayers=(SearchPlayer.searchByCountryNClub(ss,main.getClub().getName(),main.getClub().getPlayers()));
+            myPlayers.getItems().addAll(squadListPlayers);
         }
         else if(s.equals("Search By Position")){
             String ss=searchField.getText();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(SearchPlayer.searchByPosition(ss,main.getClub().getPlayers()));
+            squadListPlayers=SearchPlayer.searchByPosition(ss,main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
         }
         else if(s.equals("Search By Salary Range")) {
             String ss = searchField.getText();
             String sss = searchField2.getText();
             if (Utility.isInt(ss) && Utility.isInt(sss)) {
                 myPlayers.getItems().clear();
-                myPlayers.getItems().addAll(SearchPlayer.searchBySalaryRange(Integer.parseInt(sss), Integer.parseInt(ss), main.getClub().getPlayers()));
+                squadListPlayers=SearchPlayer.searchBySalaryRange(Integer.parseInt(sss), Integer.parseInt(ss), main.getClub().getPlayers());
+                myPlayers.getItems().addAll(squadListPlayers);
             }
         }
     }
@@ -173,8 +304,9 @@ public class ClubHomeCtrl{
     public void gg(ActionEvent event){
         String s=searchMode.getValue();
         if(s.equals("All Players")){
+            squadListPlayers=main.getClub().getPlayers();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -184,8 +316,9 @@ public class ClubHomeCtrl{
             searchField2.setPromptText("");
         }
         else if(s.equals("Search By Name")){
+            squadListPlayers=main.getClub().getPlayers();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -194,20 +327,22 @@ public class ClubHomeCtrl{
             searchField.setPromptText("Enter Name");
             searchField2.setPromptText("");
         }
-        else if(s.equals("By Country")){
+        else if(s.equals("Search By Country")){
+            squadListPlayers=main.getClub().getPlayers();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
             searchField.setEditable(true);
             searchBoob.setDisable(false);
             searchField.setPromptText("Enter Country");
-            searchField2.setPromptText("");
+            searchField2.setPromptText(null);
         }
         else if(s.equals("Search By Position")){
+            squadListPlayers=main.getClub().getPlayers();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(false);
@@ -217,8 +352,9 @@ public class ClubHomeCtrl{
             searchField2.setPromptText("");
         }
         else if(s.equals("Search By Salary Range")){
+            squadListPlayers=main.getClub().getPlayers();
             myPlayers.getItems().clear();
-            myPlayers.getItems().addAll(main.getClub().getPlayers());
+            myPlayers.getItems().addAll(squadListPlayers);
             searchField.clear();
             searchField2.clear();
             searchField2.setEditable(true);
@@ -256,5 +392,52 @@ public class ClubHomeCtrl{
         dialogScene.getStylesheets().add(getClass().getResource("Pro.css").toExternalForm());
         dialog.setScene(dialogScene);
         dialog.show();
+    }
+
+    public void handleMouseClick3(MouseEvent mouseEvent) {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("PlayerProfile.fxml"));
+        Parent root = null;
+
+        try {
+            root = loader.load();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+
+        ObservableList selectedIndices = myPlayersClub.getSelectionModel().getSelectedIndices();
+        Player tmp = null;
+        for(Object o : selectedIndices){
+            tmp= clubListPlayers.get((int) o);
+        }
+        PlayerProfileCtrl ctrl = loader.getController();
+        ctrl.setMain(main);
+        ctrl.init(tmp);
+
+        final Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        Scene dialogScene = new Scene(root, 600, 300);
+        dialogScene.getStylesheets().add(getClass().getResource("Pro.css").toExternalForm());
+        dialog.setScene(dialogScene);
+        dialog.show();
+    }
+
+    public void refreshSquad(ActionEvent event) {
+        try {
+            main.getNetworkUtil().write(new transferClub(main.getClub().getName()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void refreshClub(ActionEvent event) {
+        try {
+            transferClub tc=new transferClub("Club");
+            tc.setClub(main.getClub());
+            main.getNetworkUtil().write(tc);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

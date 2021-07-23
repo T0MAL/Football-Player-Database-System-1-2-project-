@@ -8,6 +8,7 @@ public class Club implements Serializable {
     //attributes
     private String name;
     private List<Player> players;
+    private List<Player> onMarket;
     private int playerCount;
     private double maxSalaray;
     private int oldMan;
@@ -16,6 +17,7 @@ public class Club implements Serializable {
 
     public Club(String name,Player p){
         players=new ArrayList<>();
+        onMarket=new ArrayList<>();
         this.name=name;
         playerCount=0;
         maxSalaray=0;
@@ -26,7 +28,8 @@ public class Club implements Serializable {
     }
 
     public Club(){
-
+        players=new ArrayList<>();
+        onMarket=new ArrayList<>();
     }
 
     public String getName() {
@@ -105,7 +108,23 @@ public class Club implements Serializable {
 
     }
 
-//    @Override
+    public List<Player> getOnMarket() {
+        return onMarket;
+    }
+
+    public void setOnMarket(List<Player> onMarket) {
+        this.onMarket = onMarket;
+    }
+
+    public void addToMarket(Player p){
+        onMarket.add(p);
+    }
+
+    public void removeFromMarket(Player p){
+        onMarket.remove(p);
+    }
+
+    //    @Override
 //    public int hashCode()
 //    {
 //        return ;

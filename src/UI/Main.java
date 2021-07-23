@@ -3,6 +3,8 @@ package UI;
 import Clients.readThread;
 import Code.Club;
 import Code.Player;
+import Transferables.transferClose;
+import Transferables.transferLogOUT;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,19 +21,34 @@ public class Main extends Application {
     private Stage stg;
     public static Club club;
     public static List<Player> marketListPlayers;
-    public List<Player> myPlayersinMarket=new ArrayList<>();
     private NetworkUtil networkUtil;
     private readThread rt;
 
     @Override
     public void start(Stage primaryStage){
         stg=primaryStage;
+        stg.setOnCloseRequest(e -> closeApp());
         try {
             connectToServer();
         } catch (IOException e) {
             e.printStackTrace();
         }
         showLoginWindow();
+    }
+
+    private void closeApp() {
+        if(club!=null){
+            try {
+                showAlert("You will be signed out automatically");
+                networkUtil.write(new transferClose(club.getName()));
+                club=null;
+                marketListPlayers=null;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        stg.close();
+        System.exit(0);
     }
 
     private void connectToServer() throws IOException {
@@ -96,14 +113,10 @@ public class Main extends Application {
 
     public void showAlert(String s) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Error");
+        alert.setTitle("Alert");
+        alert.setHeaderText(null);
         alert.setContentText(s);
         alert.showAndWait();
-    }
-
-    public void stop() throws IOException {
-        stg.close();
     }
 
     public void setNetworkUtil(NetworkUtil networkUtil) {
@@ -134,9 +147,6 @@ public class Main extends Application {
         this.marketListPlayers = marketListPlayers;
     }
 
-    public void setRt(readThread rt) {
-        this.rt = rt;
-    }
 
     public static void main(String[] args) {
         launch(args);

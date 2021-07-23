@@ -5,6 +5,7 @@ import Code.Player;
 import Transferables.transferPlayer;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -13,6 +14,7 @@ import util.NetworkUtil;
 import java.io.IOException;
 
 public class PlayerProfileMarketCtrl {
+    public Button buyforu;
     private Main main;
     private Player p;
     @FXML
@@ -56,5 +58,6 @@ public class PlayerProfileMarketCtrl {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        buyforu.setDisable(true);
     }
 }

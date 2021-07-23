@@ -66,9 +66,12 @@ public class readThread implements Runnable {
                                 main.setClub(cc.getClub());
                                 main.showClubHome(1);
                             }
+                            else if(cc.getMsg().equals("Done2")){
+                                main.setClub(cc.getClub());
+                                main.showClubHome(2);
+                            }
                             else if(cc.getMsg().equals("Same Club")){
                                 main.showAlert("Cant buy this player");
-
                             }
                             else if(cc.getMsg().equals("Unavailable")){
                                 main.showAlert("Player not available in the market");
@@ -86,8 +89,6 @@ public class readThread implements Runnable {
                         public void run() {
                             if(tcb.getMsg().equals("Done")){
                                 main.setClub(tcb.getClub());
-
-
                             }
                         }
                     });
@@ -103,6 +104,18 @@ public class readThread implements Runnable {
                             if(main.isInMarket()){
                                 main.showClubHome(3);
                             }
+                        }
+                    });
+                }
+                else if(o instanceof  transferLogOUT){
+                    transferLogOUT tl=(transferLogOUT) o;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            main.setClub(null);
+                            main.setInMarket(false);
+                            main.setMarketListPlayers(null);
+                            main.showLoginWindow();
                         }
                     });
                 }

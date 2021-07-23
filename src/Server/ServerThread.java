@@ -1,6 +1,7 @@
 package Server;
 
 import Code.Club;
+import Code.FileIO;
 import Code.FootballAssociation;
 import Code.Player;
 import Transferables.*;
@@ -57,9 +58,51 @@ public class ServerThread implements Runnable {
                         networkUtil.write(tl);
                     }
                 }
+                else if(o instanceof transferClose){
+                    transferClose tl=(transferClose) o;
+                    for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                        if(i.getKey().getName().equals(tl.getName())){
+                            clubList.remove(i.getKey(),i.getValue());
+                            break;
+                        }
+                    }
+                }
+                else if(o instanceof transferLogOUT){
+                    transferLogOUT tl=(transferLogOUT) o;
+                    for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                        if(i.getKey().getName().equals(tl.getName())){
+                            clubList.remove(i.getKey(),i.getValue());
+                            tl.setName("Done");
+                            networkUtil.write(tl);
+                            break;
+                        }
+                    }
+                }
                 else if(o instanceof transferMarket) {
                     transferMarket tm = (transferMarket) o;
                     tm.setPlayerMarket(playerMarket);
+                    networkUtil.write(tm);
+                }
+                else if(o instanceof transferClub) {
+                    transferClub tm = (transferClub) o;
+                    if(tm.getMsg().equals("Club")){
+                        for (Club c : fa.getClubs()) {
+                            if (tm.getClub().equals(c)) {
+                                tm.setClub(c);
+                                tm.setMsg("Done2");
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        for (Club c : fa.getClubs()) {
+                            if (tm.getMsg().equals(c.getName())) {
+                                tm.setClub(c);
+                                tm.setMsg("Done");
+                                break;
+                            }
+                        }
+                    }
                     networkUtil.write(tm);
                 }
                 else if(o instanceof transferPlayer){
@@ -74,6 +117,7 @@ public class ServerThread implements Runnable {
                         }
                         if(!e){
                             playerMarket.add(tp.getPlayer());
+                            FileIO.writeFile(("market.txt"),playerMarket);
                         }
                         transferPlayerBroadcast tpb=new transferPlayerBroadcast();
                         tpb.setPlayerMarket(playerMarket);
@@ -132,6 +176,13 @@ public class ServerThread implements Runnable {
                                 for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
                                     i.getValue().write(tpb);
                                 }
+                                try{
+                                    FileIO.writeFile("players.txt",fa.getPlayers());
+                                    FileIO.writeFile(("market.txt"),playerMarket);
+
+                                } catch (Exception exception) {
+                                    exception.printStackTrace();
+                                }
                             }
                             else{
                                 transferClub tc=new transferClub("Same Club");
@@ -145,6 +196,7 @@ public class ServerThread implements Runnable {
                             transferClub tc=new transferClub("Unavailable");
                             networkUtil.write(tc);
                         }
+
 
                     }
 

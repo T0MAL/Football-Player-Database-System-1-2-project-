@@ -125,7 +125,7 @@
 }
 
 .tab:selected {
-    -fx-background-color: #ff0048;
+    -fx-background-color: #ce2e2e;
     -fx-font-size: 24;
 }
 
@@ -135,7 +135,7 @@
     -fx-text-fill: white; /* 5 */
 }
 .list-cell { -fx-text-fill: black;
-    -fx-cell-size: 120;
+    -fx-cell-size: 70;
     -fx-font-size: 24;}
 .list-cell:odd {
     -fx-background-color: white; /* 1 */ }

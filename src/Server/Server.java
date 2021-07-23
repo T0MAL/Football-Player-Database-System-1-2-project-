@@ -4,7 +4,6 @@ import Code.Club;
 import Code.FileIO;
 import Code.FootballAssociation;
 import Code.Player;
-import Transferables.transferLogin;
 import util.NetworkUtil;
 
 import java.io.IOException;
@@ -24,10 +23,11 @@ public class Server{
     public Server() {
         try {
             fa=new FootballAssociation();
+            playerMarket=FileIO.readFromFile("market.txt");
+            System.out.println(playerMarket);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        playerMarket=new ArrayList<>();
         clientList=new HashMap<>();
         try {
             serverSocket = new ServerSocket(33333);
@@ -41,7 +41,6 @@ public class Server{
         }
         try {
             serverSocket.close();
-            FileIO.writeFile(fa.getPlayers());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,9 +49,7 @@ public class Server{
     private void serve(Socket clientSocket) throws IOException, ClassNotFoundException {
         NetworkUtil networkUtil = new NetworkUtil(clientSocket);
         new ServerThread(clientList, networkUtil,playerMarket,fa);
-
-
-
+        System.out.println("Accepted one client");
     }
 
     public static void main(String[] args) {

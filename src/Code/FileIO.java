@@ -6,9 +6,9 @@ import java.util.List;
 
 abstract public class FileIO {
 
-    public static List<Player> readFromFile() throws IOException {
+    public static List<Player> readFromFile(String fileName) throws IOException {
         List <Player> playerArray=new ArrayList();
-        BufferedReader br=new BufferedReader(new FileReader("players.txt"));
+        BufferedReader br=new BufferedReader(new FileReader(fileName));
         while(true){
             String tmp=br.readLine();
             if(tmp==null) {
@@ -30,8 +30,8 @@ abstract public class FileIO {
         return playerArray;
     }
 
-    public static void writeFile(List<Player> playerArray) throws IOException {
-        BufferedWriter bw=new BufferedWriter(new FileWriter("players.txt"));
+    public static void writeFile(String fileName,List<Player> playerArray) throws IOException {
+        BufferedWriter bw=new BufferedWriter(new FileWriter(fileName));
         for(Player p:playerArray){
             bw.write(p.getName()+","+p.getCountry()+","+p.getAge()+","+p.getHeight()+","+p.getClub()+","+p.getPosition()+","+p.getNumber()+","+p.getWeeklySalary());
             bw.write("\n");

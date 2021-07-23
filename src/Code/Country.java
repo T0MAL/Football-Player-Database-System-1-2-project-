@@ -27,4 +27,9 @@ public class Country {
     public void increaseCount(){
         this.count++;
     }
+
+    @Override
+    public String toString() {
+        return "Country: "+String.format(name)+" , Count: "+ String.valueOf(count);
+    }
 }

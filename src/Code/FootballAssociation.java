@@ -14,7 +14,7 @@ public class FootballAssociation {
         players=new ArrayList();
         clubs=new ArrayList();
         List<Player> tmpPlayer=new ArrayList();
-        tmpPlayer=FileIO.readFromFile();
+        tmpPlayer=FileIO.readFromFile("players.txt");
         for(Player i: tmpPlayer){
             addPlayer(i);
         }
@@ -27,16 +27,7 @@ public class FootballAssociation {
     public List<Club> getClubs(){ return clubs;}
 
     //methods
-    public void showAllPlayers(){
-        for(Player i:players){
-            //i.show();
-        }
-    }
-//    public void showAllClubs(){
-//        for(Club i:clubs){
-//
-//        }
-//    }
+
     public void addPlayer(Player p){
         players.add(p);
         boolean foundInClub=false;

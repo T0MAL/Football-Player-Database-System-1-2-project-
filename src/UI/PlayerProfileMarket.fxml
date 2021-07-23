@@ -36,7 +36,7 @@
             </font>
         </Label>
         <ListView fx:id="details" layoutX="275.0" layoutY="137.0" prefHeight="119.0" prefWidth="278.0" />
-        <Button layoutX="348.0" layoutY="264.0" mnemonicParsing="false" onAction="#Buy" prefHeight="26.0" prefWidth="141.0" text="Buy" />
+        <Button fx:id="buyforu" layoutX="348.0" layoutY="264.0" mnemonicParsing="false" onAction="#Buy" prefHeight="26.0" prefWidth="141.0" text="Buy" />
         <Label fx:id="position" layoutY="49.0" text="Forward" textFill="WHITE">
             <font>
                 <Font name="Arial Rounded MT Bold" size="14.0" />

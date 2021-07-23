@@ -27,6 +27,13 @@
                               <Image url="@../images/Junior%20soccer-rafiki.png" />
                            </image>
                         </ImageView>
+                        <AnchorPane layoutX="14.0" layoutY="25.0" prefHeight="286.0" prefWidth="434.0">
+                           <children>
+                              <Label layoutX="187.0" layoutY="14.0" text="Club Stats" />
+                              <Label fx:id="yearlySalary" layoutX="206.0" layoutY="255.0" text="Label" />
+                              <ListView fx:id="countryWiseCount" layoutX="29.0" layoutY="43.0" prefHeight="200.0" prefWidth="375.0" />
+                           </children>
+                        </AnchorPane>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -55,19 +62,27 @@
                         <Separator layoutX="882.0" layoutY="13.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
                         <Button fx:id="searchBoob" layoutX="784.0" layoutY="5.0" mnemonicParsing="false" onAction="#searchButt" text="Search" />
                         <Separator layoutX="763.0" layoutY="12.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
+                        <Separator layoutX="133.0" layoutY="12.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
+                        <Button layoutX="29.0" layoutY="5.0" mnemonicParsing="false" onAction="#refreshSquad" text="Refresh" />
                      </children></AnchorPane>
               </content>
             </Tab>
             <Tab fx:id="cTab" onSelectionChanged="#clubTab" text="Club ">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ChoiceBox fx:id="searchModeClub" layoutX="187.0" layoutY="14.0" prefWidth="150.0" />
+                        <ListView fx:id="myPlayersClub" focusTraversable="false" layoutX="1.0" layoutY="45.0" onMouseClicked="#handleMouseClick3" prefHeight="342.0" prefWidth="930.0" />
+                        <Button layoutX="29.0" layoutY="6.0" mnemonicParsing="false" onAction="#refreshClub" text="Refresh" />
+                        <Separator layoutX="147.0" layoutY="13.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
+                     </children></AnchorPane>
               </content>
             </Tab>
           <Tab fx:id="tTAb" onSelectionChanged="#transfersTab" text="Transfers">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="920.0">
                      <children>
-                        <ListView fx:id="marketList" onMouseClicked="#handleMouseClick2" focusTraversable="false" prefHeight="347.0" prefWidth="934.0" />
+                        <ListView fx:id="marketList" focusTraversable="false" onMouseClicked="#handleMouseClick2" prefHeight="347.0" prefWidth="934.0" />
                         <Button layoutX="827.0" layoutY="349.0" mnemonicParsing="false" onAction="#getMarketButt" text="Get Market" />
                      </children>
                   </AnchorPane>
