@@ -9,16 +9,18 @@
 
 <AnchorPane prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="UI.LoginWindowCtrl">
    <children>
-      <AnchorPane layoutX="110.0" layoutY="50.0" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: rgba( 255, 255, 255, 0.25 ); -fx-background-radius: 10; -fx-border-width: 1; -fx-border-color: 1px solid rgba( 255, 255, 255, 0.18 );" />
-      <ImageView fitHeight="453.0" fitWidth="803.0" opacity="0.07" pickOnBounds="true">
+      <ImageView fitHeight="540.0" fitWidth="960.0" opacity="0.07" pickOnBounds="true">
          <image>
             <Image url="@../images/download.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="clubName" focusTraversable="false" layoutX="311.0" layoutY="197.0" onAction="#goButt" promptText="Enter Club Name" />
-      <Label fx:id="error" layoutX="386.0" layoutY="250.0" textFill="RED">
+      <AnchorPane layoutX="122.0" layoutY="79.0" prefHeight="400.0" prefWidth="716.0" style="-fx-background-color: rgba( 255, 255, 255, 0.25 ); -fx-background-radius: 10; -fx-border-width: 1; -fx-border-color: 1px solid rgba( 255, 255, 255, 0.18 );">
+         <children>
+            <TextField fx:id="clubName" layoutX="282.0" layoutY="200.0" onAction="#goButt" promptText="Enter Club Name" />
+         </children></AnchorPane>
+      <Label layoutX="130.0" layoutY="8.0" text="Football Player Database System" textFill="WHITE" wrapText="true">
          <font>
-            <Font size="10.0" />
+            <Font name="Bauhaus 93" size="48.0" />
          </font>
       </Label>
    </children>

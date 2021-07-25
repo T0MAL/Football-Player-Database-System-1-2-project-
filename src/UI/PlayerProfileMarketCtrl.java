@@ -9,12 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import util.NetworkUtil;
 
 import java.io.IOException;
 
 public class PlayerProfileMarketCtrl {
     public Button buyforu;
+    public ImageView img;
     private Main main;
     private Player p;
     @FXML
@@ -29,7 +31,7 @@ public class PlayerProfileMarketCtrl {
     private Label number;
     @FXML
     ListView details;
-//    Image img;
+    Image image;
 
 
     public void setMain(Main main) {
@@ -46,6 +48,10 @@ public class PlayerProfileMarketCtrl {
         details.getItems().add("age: " + String.valueOf(p.getAge()));
         details.getItems().add("height: " + String.valueOf(p.getHeight()));
         details.getItems().add(("weekly-salary: " + String.valueOf(p.getWeeklySalary())));
+        String tmp="/images/Players/"+p.getName()+".png";
+        image = new Image(getClass().getResourceAsStream(tmp));
+
+        img.setImage(image);
     }
 
 

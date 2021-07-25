@@ -3,4 +3,34 @@
     -fx-font-size: 18;}
 .list-cell:odd {
     -fx-background-color: white; /* 1 */ }
-.list-cell:even { -fx-background-color: #a8afaf; /* for information */ }
+.list-cell:even { -fx-background-color: #d9e7e7; /* for information */ }
+
+.button{
+    -fx-background-color: #5cd26c;
+    /*linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),*/
+    /*linear-gradient(#20262b, #191d22),*/
+    /*radial-gradient(center 50% 0%, radius 100%, rgba(103, 92, 224, 0.9), rgba(255,255,255,0));*/
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(black, #312f2f);
+    -fx-font-size: 15px;
+    -fx-padding: 1 10 1 10;
+}
+
+.button:hover{
+    -fx-background-color: #85e093;
+    /*linear-gradient(#38424b 0%, #1f2429 20%, #191d22 100%),*/
+    /*linear-gradient(#20262b, #191d22),*/
+    /*radial-gradient(center 50% 0%, radius 100%, rgba(103, 92, 224, 0.9), rgba(255,255,255,0));*/
+    -fx-background-radius: 5,4,3,5;
+    -fx-background-insets: 0,1,2,0;
+    -fx-text-fill: white;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-font-family: "Arial";
+    -fx-text-fill: linear-gradient(black, #312f2f);
+    -fx-font-size: 15px;
+    -fx-padding: 1 10 1 10;
+}

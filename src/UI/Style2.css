@@ -5,7 +5,7 @@
 
 .text-field {
     -fx-font-family: "Arial";
-    -fx-prompt-text-fill: #7a7a87;
+    -fx-prompt-text-fill: #404047;
     -fx-text-fill: linear-gradient(#0e0e0e, #312f2f);
     -fx-font-size: 14px;
     -fx-border-color: #151414;
@@ -42,5 +42,15 @@
     -fx-text-fill: #FFF;
     -fx-font-size: 15px;
     -fx-padding: 10 15 10 15;
+}
+
+.label{
+    -fx-background-color:
+            transparent;
+    -fx-background-insets: 0 0 -1 0,0,1;
+    -fx-background-radius: 5,5,4;
+    -fx-padding: 3 0 3 0;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+    -fx-text-fill: #242d35;
 }
 

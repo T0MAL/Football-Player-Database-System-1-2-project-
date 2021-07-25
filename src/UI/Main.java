@@ -4,7 +4,6 @@ import Clients.readThread;
 import Code.Club;
 import Code.Player;
 import Transferables.transferClose;
-import Transferables.transferLogOUT;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -119,9 +118,6 @@ public class Main extends Application {
         alert.showAndWait();
     }
 
-    public void setNetworkUtil(NetworkUtil networkUtil) {
-        this.networkUtil = networkUtil;
-    }
 
     public NetworkUtil getNetworkUtil() {
         return networkUtil;
@@ -146,7 +142,6 @@ public class Main extends Application {
     public void setMarketListPlayers(List<Player> marketListPlayers) {
         this.marketListPlayers = marketListPlayers;
     }
-
 
     public static void main(String[] args) {
         launch(args);

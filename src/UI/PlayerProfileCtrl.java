@@ -56,18 +56,8 @@ public class PlayerProfileCtrl {
         String tmp="/images/Players/"+p.getName()+".png";
         image = new Image(getClass().getResourceAsStream(tmp));
 
-        //imageView = new ImageView(image);
         img.setImage(image);
-        //Setting the position of the image
-//        imageView.setX(0);
-//        imageView.setY(4);
 
-        //setting the fit height and width of the image view
-//        imageView.setFitHeight(291);
-//        imageView.setFitWidth(245);
-//
-//        //Setting the preserve ratio of the image view
-//        imageView.setPreserveRatio(false);
     }
 
     public void Sell(ActionEvent actionEvent) {

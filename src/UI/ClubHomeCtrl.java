@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 public class ClubHomeCtrl{
     public Tab hTab;
@@ -34,6 +35,7 @@ public class ClubHomeCtrl{
     private List<Player> marketListPlayers;
     private List<Player> squadListPlayers;
     private List<Player> clubListPlayers;
+    private List<Country> ccList;
 
     @FXML
     private Label clubTitle;
@@ -51,7 +53,7 @@ public class ClubHomeCtrl{
     }
 
     public void init(int indx){
-        clubTitle.setText(main.club.getName());
+        clubTitle.setText(main.club.getName().toUpperCase(Locale.ROOT));
         searchMode.getItems().addAll("All Players","Search By Name","Search By Country","Search By Position",
                     "Search By Salary Range");
         searchModeClub.getItems().addAll("All Players","Player(s) with the maximum salary of a club","Player(s) with the maximum age of a club","Player(s) with the maximum height of a club");
@@ -63,9 +65,21 @@ public class ClubHomeCtrl{
         myPlayers.getItems().addAll(squadListPlayers);
         clubListPlayers=main.getClub().getPlayers();
         myPlayersClub.getItems().addAll(clubListPlayers);
-        countryWiseCount.getItems().addAll(SearchPlayer.countryWiseCount(main.getClub().getPlayers()));
-        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.valueOf(SearchClub.totalSalary(main.getClub().getName(), Collections.singletonList(main.getClub()))));
+        ccList=SearchPlayer.countryWiseCount(main.getClub().getPlayers());
+        countryWiseCount.getItems().addAll(ccList);
+        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.format("%.3f",SearchClub.totalSalary(main.getClub().getName(), Collections.singletonList(main.getClub()))));
         tabPane.getSelectionModel().select(indx);
+    }
+
+    public void ccHandle(MouseEvent mouseEvent) {
+        searchMode.setValue("Search By Country");
+        ObservableList selectedIndices = countryWiseCount.getSelectionModel().getSelectedIndices();
+        Country tmp = null;
+        for(Object o : selectedIndices){
+            tmp= ccList.get((int) o);
+        }
+        searchField.setText(tmp.getName());
+        tabPane.getSelectionModel().select(1);
     }
 
     private void wp(Event event) {
@@ -163,7 +177,6 @@ public class ClubHomeCtrl{
 
     public void clubTab(Event event) {
         if(cTab.isSelected()) {
-            System.out.println(searchModeClub.getValue());
             if(searchModeClub.getValue().equals("All Players")){
                 clubListPlayers=main.getClub().getPlayers();
                 myPlayersClub.getItems().clear();
@@ -440,4 +453,6 @@ public class ClubHomeCtrl{
             e.printStackTrace();
         }
     }
+
+
 }

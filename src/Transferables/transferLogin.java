@@ -1,6 +1,7 @@
 package Transferables;
 
 import Code.Club;
+import Code.Player;
 
 import java.io.Serializable;
 
@@ -23,6 +24,7 @@ public class transferLogin implements Serializable {
         this.pass=pass;
         this.response="pending";
         this.club=null;
+
     }
 
     public transferLogin(String name){

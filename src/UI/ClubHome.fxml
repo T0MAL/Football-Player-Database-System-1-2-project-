@@ -30,8 +30,11 @@
                         <AnchorPane layoutX="14.0" layoutY="25.0" prefHeight="286.0" prefWidth="434.0">
                            <children>
                               <Label layoutX="187.0" layoutY="14.0" text="Club Stats" />
-                              <Label fx:id="yearlySalary" layoutX="206.0" layoutY="255.0" text="Label" />
-                              <ListView fx:id="countryWiseCount" layoutX="29.0" layoutY="43.0" prefHeight="200.0" prefWidth="375.0" />
+                              <Label fx:id="yearlySalary" layoutX="29.0" layoutY="249.0" prefHeight="30.0" prefWidth="394.0" text="Label">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                              <ListView fx:id="countryWiseCount" layoutX="29.0" layoutY="43.0" onMouseClicked="#ccHandle" prefHeight="200.0" prefWidth="393.0" />
                            </children>
                         </AnchorPane>
                      </children></AnchorPane>
@@ -56,14 +59,14 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <ListView fx:id="myPlayers" focusTraversable="false" layoutY="46.0" onMouseClicked="#handleMouseClick" prefHeight="342.0" prefWidth="930.0" />
+                        <ListView fx:id="myPlayers" focusTraversable="false" layoutY="45.0" onMouseClicked="#handleMouseClick" prefHeight="342.0" prefWidth="930.0" />
                         <Separator layoutX="328.0" layoutY="13.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
                         <TextField fx:id="searchField2" layoutX="347.0" layoutY="11.0" />
                         <Separator layoutX="882.0" layoutY="13.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
                         <Button fx:id="searchBoob" layoutX="784.0" layoutY="5.0" mnemonicParsing="false" onAction="#searchButt" text="Search" />
                         <Separator layoutX="763.0" layoutY="12.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
                         <Separator layoutX="133.0" layoutY="12.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
-                        <Button layoutX="29.0" layoutY="5.0" mnemonicParsing="false" onAction="#refreshSquad" text="Refresh" />
+                        <Button layoutX="30.0" layoutY="5.0" mnemonicParsing="false" onAction="#refreshSquad" text="Refresh" />
                      </children></AnchorPane>
               </content>
             </Tab>
@@ -71,10 +74,10 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ChoiceBox fx:id="searchModeClub" layoutX="187.0" layoutY="14.0" prefWidth="150.0" />
-                        <ListView fx:id="myPlayersClub" focusTraversable="false" layoutX="1.0" layoutY="45.0" onMouseClicked="#handleMouseClick3" prefHeight="342.0" prefWidth="930.0" />
-                        <Button layoutX="29.0" layoutY="6.0" mnemonicParsing="false" onAction="#refreshClub" text="Refresh" />
-                        <Separator layoutX="147.0" layoutY="13.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
+                        <ChoiceBox fx:id="searchModeClub" layoutX="158.0" layoutY="13.0" prefHeight="22.0" prefWidth="284.0" />
+                        <ListView fx:id="myPlayersClub" focusTraversable="false" layoutY="45.0" onMouseClicked="#handleMouseClick3" prefHeight="342.0" prefWidth="930.0" />
+                        <Button layoutX="30.0" layoutY="5.0" mnemonicParsing="false" onAction="#refreshClub" text="Refresh" />
+                        <Separator layoutX="133.0" layoutY="12.0" orientation="VERTICAL" prefHeight="23.0" prefWidth="2.0" />
                      </children></AnchorPane>
               </content>
             </Tab>
@@ -82,18 +85,23 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="380.0" prefWidth="920.0">
                      <children>
-                        <ListView fx:id="marketList" focusTraversable="false" onMouseClicked="#handleMouseClick2" prefHeight="347.0" prefWidth="934.0" />
-                        <Button layoutX="827.0" layoutY="349.0" mnemonicParsing="false" onAction="#getMarketButt" text="Get Market" />
+                        <ListView fx:id="marketList" focusTraversable="false" layoutY="45.0" onMouseClicked="#handleMouseClick2" prefHeight="342.0" prefWidth="930.0" />
+                        <Button layoutX="30.0" layoutY="5.0" mnemonicParsing="false" onAction="#getMarketButt" text="Refresh" />
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
         </tabs>
       </TabPane>
-      <Label fx:id="clubTitle" layoutX="453.0" layoutY="27.0" style="-fx-background-color: transparent;" text="Label">
+      <Button layoutX="856.0" layoutY="22.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
+      <ImageView fitHeight="57.0" fitWidth="106.0" layoutX="452.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/imgbin_football-png.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="clubTitle" layoutX="14.0" layoutY="22.0" prefHeight="38.0" prefWidth="360.0" style="-fx-background-color: transparent;" text="Label" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font name="Elephant" size="18.0" />
+            <Font name="Elephant" size="24.0" />
          </font></Label>
-      <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
    </children>
 </AnchorPane>
