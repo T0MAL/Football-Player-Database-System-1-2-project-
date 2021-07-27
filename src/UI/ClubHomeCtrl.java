@@ -279,10 +279,10 @@ public class ClubHomeCtrl{
     }
 
     public void homeTab(Event event) {
-        ccList=SearchPlayer.countryWiseCount(main.getClub().getPlayers());
-        countryWiseCount.getItems().clear();
-        countryWiseCount.getItems().addAll(ccList);
-        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.format("%.2f",SearchClub.totalSalary(main.getClub().getName(),main.getClub().getPlayers())));
+        //ccList=SearchPlayer.countryWiseCount(main.getClub().getPlayers());
+        //countryWiseCount.getItems().clear();
+       // countryWiseCount.getItems().addAll(ccList);
+        //yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.format("%.2f",SearchClub.totalSalary(main.getClub().getName(),main.getClub().getPlayers())));
 
     }
 
