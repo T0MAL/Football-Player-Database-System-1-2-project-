@@ -41,6 +41,7 @@ public class ServerThread implements Runnable {
                                 tl.setResponse("Accepted");
                                 tl.setClub(c);
                                 networkUtil.write(tl);
+                                ///synchronize
                                 clubList.put(c, networkUtil);
                                 transferPlayerBroadcast tpb=new transferPlayerBroadcast();
                                 tpb.setPlayerMarket(playerMarket);
@@ -60,23 +61,34 @@ public class ServerThread implements Runnable {
                 }
                 else if(o instanceof transferClose){
                     transferClose tl=(transferClose) o;
-                    for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
-                        if(i.getKey().getName().equals(tl.getName())){
-                            clubList.remove(i.getKey(),i.getValue());
-                            break;
+                    synchronized (clubList)
+                    {
+                        for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                            if(i.getKey().getName().equals(tl.getName())){
+                                ///synchronize
+                                clubList.remove(i.getKey(),i.getValue());
+                                break;
+                            }
                         }
+
                     }
+
                 }
                 else if(o instanceof transferLogOUT){
                     transferLogOUT tl=(transferLogOUT) o;
-                    for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
-                        if(i.getKey().getName().equals(tl.getName())){
-                            clubList.remove(i.getKey(),i.getValue());
-                            tl.setName("Done");
-                            networkUtil.write(tl);
-                            break;
+                    synchronized (clubList)
+                    {
+                        for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
+                            if(i.getKey().getName().equals(tl.getName())){
+                                ///synchronize
+                                clubList.remove(i.getKey(),i.getValue());
+                                tl.setName("Done");
+                                networkUtil.write(tl);
+                                break;
+                            }
                         }
                     }
+
                 }
                 else if(o instanceof transferMarket) {
                     transferMarket tm = (transferMarket) o;
@@ -109,15 +121,20 @@ public class ServerThread implements Runnable {
                     transferPlayer tp=(transferPlayer) o;
                     if(tp.getMethod().equals("forSell")){
                         boolean e=false;
-                        for(Player i: playerMarket){
-                            if(i.equals(tp.getPlayer())){
-                                e=true;
-                                break;
-                            }
-                        }
+//                        for(Player i: playerMarket){
+//                            if(i.equals(tp.getPlayer())){
+//                                e=true;
+//                                break;
+//                            }
+//                        }
+                        if(playerMarket.contains(tp.getPlayer()))
+                            e=true;
                         if(!e){
-                            playerMarket.add(tp.getPlayer());
-                            FileIO.writeFile(("market.txt"),playerMarket);
+                            ///synchronize
+                            synchronized (playerMarket){
+                                playerMarket.add(tp.getPlayer());
+                            }
+                            //FileIO.writeFile(("market.txt"),playerMarket);
                         }
                         transferPlayerBroadcast tpb=new transferPlayerBroadcast();
                         tpb.setPlayerMarket(playerMarket);
@@ -126,6 +143,7 @@ public class ServerThread implements Runnable {
                         }
                     }
                     else if(tp.getMethod().equals("Buy")){
+                        synchronized (fa) {
                         boolean e=false;
                         Player p=null;
                         int indx=0;
@@ -138,63 +156,65 @@ public class ServerThread implements Runnable {
                         }
                         Club buyer=null;
                         Club seller=null;
-                        if(e){
-                            for(Player i:fa.getPlayers()){
-                                if(i.equals(tp.getPlayer())){
-                                    p=i;
-                                    seller=i.getC();
-                                    i.setClub(tp.getFromClub().getName());
-                                }
-                            }
-                            if(!seller.equals(tp.getFromClub())) {
-                                playerMarket.remove(indx);
-                                for (Club i : fa.getClubs()) {
-                                    if (i.equals(tp.getFromClub())) {
-                                        i.addPlayer(p);
-                                        p.setC(i);
-                                        buyer = i;
-                                    }
-                                    if (i.equals(seller)) {
-                                        i.removePlayer(p);
-                                    }
-                                }
-                                transferMarket tm = new transferMarket();
-                                tm.setPlayerMarket(playerMarket);
-                                networkUtil.write(tm);
-                                transferClubBackground tc=new transferClubBackground("Done");
-                                tc.setClub(buyer);
-                                networkUtil.write(tc);
-                                tc.setClub(seller);
-                                for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
-                                   if( i.getKey().equals(seller)){
-                                        i.getValue().write(tc);
-                                        break;
-                                    }
-                                }
-                                transferPlayerBroadcast tpb=new transferPlayerBroadcast();
-                                tpb.setPlayerMarket(playerMarket);
-                                for(Map.Entry<Club,NetworkUtil> i: clubList.entrySet()){
-                                    i.getValue().write(tpb);
-                                }
-                                try{
-                                    FileIO.writeFile("players.txt",fa.getPlayers());
-                                    FileIO.writeFile(("market.txt"),playerMarket);
 
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
+                            if (e) {
+                                for (Player i : fa.getPlayers()) {
+                                    if (i.equals(tp.getPlayer())) {
+                                        p = i;
+                                        seller = i.getC();
+                                        i.setClub(tp.getFromClub().getName());
+                                    }
                                 }
-                            }
-                            else{
-                                transferClub tc=new transferClub("Same Club");
+                                if (!seller.equals(tp.getFromClub())) {
+                                    ///synchronize
+                                    ///synchronize
+                                    playerMarket.remove(indx);
+                                    for (Club i : fa.getClubs()) {
+                                        if (i.equals(tp.getFromClub())) {
+                                            i.addPlayer(p);
+                                            p.setC(i);
+                                            buyer = i;
+                                        }
+                                        if (i.equals(seller)) {
+                                            i.removePlayer(p);
+                                        }
+                                    }
+                                    transferMarket tm = new transferMarket();
+                                    tm.setPlayerMarket(playerMarket);
+                                    networkUtil.write(tm);
+                                    transferClubBackground tc = new transferClubBackground("Done");
+                                    tc.setClub(buyer);
+                                    networkUtil.write(tc);
+                                    tc.setClub(seller);
+                                    for (Map.Entry<Club, NetworkUtil> i : clubList.entrySet()) {
+                                        if (i.getKey().equals(seller)) {
+                                            i.getValue().write(tc);
+                                            break;
+                                        }
+                                    }
+                                    transferPlayerBroadcast tpb = new transferPlayerBroadcast();
+                                    tpb.setPlayerMarket(playerMarket);
+                                    for (Map.Entry<Club, NetworkUtil> i : clubList.entrySet()) {
+                                        i.getValue().write(tpb);
+                                    }
+                                    try {
+                                        //FileIO.writeFile("players.txt", fa.getPlayers());
+                                        //FileIO.writeFile(("market.txt"), playerMarket);
+
+                                    } catch (Exception exception) {
+                                        exception.printStackTrace();
+                                    }
+                                } else {
+                                    transferClub tc = new transferClub("Same Club");
+                                    networkUtil.write(tc);
+                                }
+                            } else {
+                                transferMarket tmm = new transferMarket();
+                                tmm.setPlayerMarket(playerMarket);
+                                networkUtil.write(tmm);
+                                transferClub tc = new transferClub("Unavailable");
                                 networkUtil.write(tc);
                             }
-                        }
-                        else{
-                            transferMarket tmm = new transferMarket();
-                            tmm.setPlayerMarket(playerMarket);
-                            networkUtil.write(tmm);
-                            transferClub tc=new transferClub("Unavailable");
-                            networkUtil.write(tc);
                         }
 
 

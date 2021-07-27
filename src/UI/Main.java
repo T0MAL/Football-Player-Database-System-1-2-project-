@@ -123,9 +123,6 @@ public class Main extends Application {
         return networkUtil;
     }
 
-    public readThread getRt() {
-        return rt;
-    }
 
     public Club getClub() {
         return club;

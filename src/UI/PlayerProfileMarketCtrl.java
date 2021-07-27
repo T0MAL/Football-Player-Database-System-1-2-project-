@@ -17,6 +17,7 @@ import java.io.IOException;
 public class PlayerProfileMarketCtrl {
     public Button buyforu;
     public ImageView img;
+    public ImageView clubLogo;
     private Main main;
     private Player p;
     @FXML
@@ -48,10 +49,9 @@ public class PlayerProfileMarketCtrl {
         details.getItems().add("age: " + String.valueOf(p.getAge()));
         details.getItems().add("height: " + String.valueOf(p.getHeight()));
         details.getItems().add(("weekly-salary: " + String.valueOf(p.getWeeklySalary())));
-        String tmp="/images/Players/"+p.getName()+".png";
-        image = new Image(getClass().getResourceAsStream(tmp));
 
-        img.setImage(image);
+        img.setImage(p.getImage());
+        clubLogo.setImage(p.getC().getImage());
     }
 
 

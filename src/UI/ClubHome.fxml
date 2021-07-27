@@ -93,15 +93,16 @@
           </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="856.0" layoutY="22.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
-      <ImageView fitHeight="57.0" fitWidth="106.0" layoutX="452.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
+      <Button layoutX="804.0" layoutY="22.0" mnemonicParsing="false" onAction="#logOut" text="Logout" />
+      <ImageView fitHeight="57.0" fitWidth="106.0" layoutX="888.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../images/imgbin_football-png.png" />
+            <Image url="@../images/football.gif" />
          </image>
       </ImageView>
-      <Label fx:id="clubTitle" layoutX="14.0" layoutY="22.0" prefHeight="38.0" prefWidth="360.0" style="-fx-background-color: transparent;" text="Label" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="clubTitle" layoutX="14.0" layoutY="22.0" prefHeight="38.0" prefWidth="426.0" style="-fx-background-color: transparent;" text="Label" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Elephant" size="24.0" />
          </font></Label>
+      <ImageView fx:id="clubImage" fitHeight="65.0" fitWidth="65.0" layoutX="448.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>

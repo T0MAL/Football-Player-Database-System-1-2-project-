@@ -37,10 +37,10 @@ public class readThread implements Runnable {
                                 main.showClubHome(0);
                             }
                             else if(tmp.getResponse().equals("Exists")){
-                                main.showAlert("Already signed in");
+                                main.showAlert("Already logged in");
                             }
                             else{
-                                main.showAlert("Club doesn't exist");
+                                main.showAlert("This club doesn't exist in the server");
                             }
                         }
                     });

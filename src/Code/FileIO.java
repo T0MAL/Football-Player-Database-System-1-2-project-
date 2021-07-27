@@ -1,13 +1,16 @@
 package Code;
 
+import javafx.scene.image.Image;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 abstract public class FileIO {
 
     public static List<Player> readFromFile(String fileName) throws IOException {
-        List <Player> playerArray=new ArrayList();
+        List <Player> playerArray= Collections.synchronizedList(new ArrayList<Player>());
         BufferedReader br=new BufferedReader(new FileReader(fileName));
         while(true){
             String tmp=br.readLine();
@@ -24,6 +27,8 @@ abstract public class FileIO {
             p.setPosition(tokens[5]);
             p.setNumber(Integer.parseInt(tokens[6]));
             p.setWeeklySalary(Double.parseDouble(tokens[7]));
+            //String tmp="/images/Players/"+i.getName()+".png";
+            p.setImage(new Image(FileIO.class.getResourceAsStream("/Server/images/Players/"+p.getName()+".png")));
             playerArray.add(p);
         }
         br.close();

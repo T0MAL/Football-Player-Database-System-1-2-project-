@@ -10,11 +10,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -31,11 +33,12 @@ public class ClubHomeCtrl{
     public ListView myPlayersClub;
     public Label yearlySalary;
     public ListView countryWiseCount;
+    public ImageView clubImage;
     private Main main;
     private List<Player> marketListPlayers;
     private List<Player> squadListPlayers;
     private List<Player> clubListPlayers;
-    private List<Country> ccList;
+    private List<Country> ccList=new ArrayList<>();
 
     @FXML
     private Label clubTitle;
@@ -54,6 +57,7 @@ public class ClubHomeCtrl{
 
     public void init(int indx){
         clubTitle.setText(main.club.getName().toUpperCase(Locale.ROOT));
+        clubImage.setImage(main.getClub().getImage());
         searchMode.getItems().addAll("All Players","Search By Name","Search By Country","Search By Position",
                     "Search By Salary Range");
         searchModeClub.getItems().addAll("All Players","Player(s) with the maximum salary of a club","Player(s) with the maximum age of a club","Player(s) with the maximum height of a club");
@@ -67,8 +71,10 @@ public class ClubHomeCtrl{
         myPlayersClub.getItems().addAll(clubListPlayers);
         ccList=SearchPlayer.countryWiseCount(main.getClub().getPlayers());
         countryWiseCount.getItems().addAll(ccList);
-        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.format("%.3f",SearchClub.totalSalary(main.getClub().getName(), Collections.singletonList(main.getClub()))));
-        tabPane.getSelectionModel().select(indx);
+        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.format("%.2f",SearchClub.totalSalary(main.getClub().getName(),main.getClub().getPlayers())));
+        if(indx!=0){
+            tabPane.getSelectionModel().select(indx);
+        }
     }
 
     public void ccHandle(MouseEvent mouseEvent) {
@@ -91,17 +97,17 @@ public class ClubHomeCtrl{
             }
             else if(s.equals("Player(s) with the maximum salary of a club")){
                 myPlayersClub.getItems().clear();
-                clubListPlayers= SearchClub.maxSalary(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                clubListPlayers= SearchClub.maxSalary(main.getClub().getName(),main.getClub().getPlayers());
                 myPlayersClub.getItems().addAll(clubListPlayers);
             }
             else if(s.equals("Player(s) with the maximum age of a club")){
                 myPlayersClub.getItems().clear();
-                clubListPlayers= SearchClub.maxAge(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                clubListPlayers= SearchClub.maxAge(main.getClub().getName(), main.getClub().getPlayers());
                 myPlayersClub.getItems().addAll(clubListPlayers);
             }
             else if(s.equals("Player(s) with the maximum height of a club")){
                 myPlayersClub.getItems().clear();
-                clubListPlayers= SearchClub.maxHeight(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                clubListPlayers= SearchClub.maxHeight(main.getClub().getName(), main.getClub().getPlayers());
                 myPlayersClub.getItems().addAll(clubListPlayers);
             }
 
@@ -184,17 +190,17 @@ public class ClubHomeCtrl{
             }
             else if(searchModeClub.getValue().equals("Player(s) with the maximum salary of a club")){
                 myPlayersClub.getItems().clear();
-                clubListPlayers= SearchClub.maxSalary(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                clubListPlayers= SearchClub.maxSalary(main.getClub().getName(), main.getClub().getPlayers());
                 myPlayersClub.getItems().addAll(clubListPlayers);
             }
             else if(searchModeClub.getValue().equals("Player(s) with the maximum age of a club")){
                 myPlayersClub.getItems().clear();
-                clubListPlayers= SearchClub.maxAge(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                clubListPlayers= SearchClub.maxAge(main.getClub().getName(), main.getClub().getPlayers());
                 myPlayersClub.getItems().addAll(clubListPlayers);
             }
             else if(searchModeClub.getValue().equals("Player(s) with the maximum height of a club")){
                 myPlayersClub.getItems().clear();
-                clubListPlayers= SearchClub.maxHeight(main.getClub().getName(), Collections.singletonList(main.getClub()));
+                clubListPlayers= SearchClub.maxHeight(main.getClub().getName(), main.getClub().getPlayers());
                 myPlayersClub.getItems().addAll(clubListPlayers);
             }
         }
@@ -273,12 +279,11 @@ public class ClubHomeCtrl{
     }
 
     public void homeTab(Event event) {
-        if(hTab.isSelected()) {
-            //System.out.println(countryWiseCount.getItems());
-            //countryWiseCount.getItems().clear();
-            //countryWiseCount.getItems().addAll(SearchPlayer.countryWiseCount(main.getClub().getPlayers()));
-            //yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.valueOf(SearchClub.totalSalary(main.getClub().getName(), Collections.singletonList(main.getClub()))));
-        }
+        ccList=SearchPlayer.countryWiseCount(main.getClub().getPlayers());
+        countryWiseCount.getItems().clear();
+        countryWiseCount.getItems().addAll(ccList);
+        yearlySalary.setText("Total yearly salary of "+main.getClub().getName()+" is "+String.format("%.2f",SearchClub.totalSalary(main.getClub().getName(),main.getClub().getPlayers())));
+
     }
 
     public void searchButt(ActionEvent actionEvent) {

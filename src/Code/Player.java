@@ -1,7 +1,6 @@
 package Code;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 
 import java.io.Serializable;
 
@@ -16,6 +15,7 @@ public class Player implements Serializable {
     private double height;
     private double weeklySalary;
     private Club c;
+    private MyImage img=new MyImage();
 
 
     //getters and setters
@@ -122,13 +122,13 @@ public class Player implements Serializable {
         Player p = (Player) o;
 
         return name.equals(p.getName());
-//                && club.equals(p.getClub())
-//                && country.equals(p.getCountry())
-//                && position.equals(p.getPosition())
-//                && age==p.getAge()
-//                && height==p.getHeight()
-//                && weeklySalary==p.getWeeklySalary()
-//                && number==p.getNumber();
     }
 
+    public Image getImage() {
+        return img.getImage();
+    }
+
+    public void setImage(Image image) {
+        img.setImage(image);
+    }
 }

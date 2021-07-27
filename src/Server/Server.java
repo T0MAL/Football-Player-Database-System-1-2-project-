@@ -9,7 +9,7 @@ import util.NetworkUtil;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class Server{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        clientList=new HashMap<>();
+        clientList= Collections.synchronizedMap(new HashMap<>());
         try {
             serverSocket = new ServerSocket(33333);
             System.out.println("ServerOn");
@@ -46,7 +46,7 @@ public class Server{
         }
     }
 
-    private void serve(Socket clientSocket) throws IOException, ClassNotFoundException {
+    private void serve(Socket clientSocket) throws IOException {
         NetworkUtil networkUtil = new NetworkUtil(clientSocket);
         new ServerThread(clientList, networkUtil,playerMarket,fa);
         System.out.println("Accepted one client");

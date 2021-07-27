@@ -19,6 +19,7 @@ import java.io.IOException;
 public class PlayerProfileCtrl {
     public Button sellforu;
     public ImageView img;
+    public ImageView clubLogo;
     private Main main;
     private Player p;
     @FXML
@@ -53,11 +54,8 @@ public class PlayerProfileCtrl {
         if(main.getMarketListPlayers().contains(p)){
             sellforu.setDisable(true);
         }
-        String tmp="/images/Players/"+p.getName()+".png";
-        image = new Image(getClass().getResourceAsStream(tmp));
-
-        img.setImage(image);
-
+        img.setImage(p.getImage());
+        clubLogo.setImage(p.getC().getImage());
     }
 
     public void Sell(ActionEvent actionEvent) {
